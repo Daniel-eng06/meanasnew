@@ -42,7 +42,7 @@ function SideBar() {
                         </div>
                         <h3>Upgrade to Unlimited Plan</h3>
                     </div>
-                    <p>Access unlimited clarity and accuracy of your analysis.</p>
+                    <p>Access unlimited clarity and accuracy for your analysis.</p>
                 </Link>
             </div>
             <div className='topbar'>

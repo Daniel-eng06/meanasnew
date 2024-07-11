@@ -13,8 +13,8 @@ function Navbar() {
                 <img src={image.MeanAsLogo} alt="MeanAsLogo"/>
             </Link>
            <ul className="menu">
-               <li><Link id="l1">About</Link></li>
-               <li><Link id="l1">Features</Link></li>
+               <li><Link id="l1" to="">About</Link></li>
+               <li><Link id="l1" to="">Features</Link></li>
                <li><Link to="/Dashboard" id="l1">Dashboard</Link></li>
            </ul>
             <ul className="try">
