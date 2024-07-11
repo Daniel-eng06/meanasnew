@@ -4,7 +4,7 @@ export const benefit=[
         alt:"expert",
         img:"expert.png",
         h2:"Expert Interpretation Anytime",
-        description:"Gain access to expert interpretation before and after your FEA/CFD analysis, " +
+        description:"Gain access to expert pre-processing and interpretation before and after your FEA/CFD analysis, " +
             "ensuring accurate understanding of your project and results."
     },
     {
@@ -12,8 +12,8 @@ export const benefit=[
         alt:"savetime",
         img:"save-time.png",
         h2:"Save Time and Reduce Stress",
-        description:"Eliminate confusion and save valuable time " +
-            "with clear interpretations, reducing stress and increasing productivity."
+        description:"Eliminate confusion and save valuable time and money " +
+            "with clear assistance and interpretations, reducing stress and increasing productivity."
     },
     {
         id: 2,
