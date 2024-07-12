@@ -98,7 +98,7 @@ function Errorchecker() {
               id="description"
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
-              placeholder='Describe your goal to overcome this analysis error...'
+              placeholder='Describe your project, goals and objectives... MeanAs is here to solve it fast.'
               required
             />
           </div>

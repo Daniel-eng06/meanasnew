@@ -115,7 +115,7 @@ function Preprocess() {
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder='Describe your project, goals and objectives...'
+              placeholder='Describe your project, goals and objectives... MeanAs can assist you throughout your specific project.'
               required
             />
           </div>
