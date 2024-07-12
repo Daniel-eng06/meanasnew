@@ -1,131 +1,121 @@
-import React, { useState, useEffect } from "react";
-import "./Errorchecker.css";
-import { storage, db } from '../../firebase'; 
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { collection, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import React, { useState } from 'react';
+import './Errorchecker.css';
+import Footer from '../Home/Footer';
+import Grid from '../../Grid';
+import Defaultbars from './Defaultbars';
+import { storage, db } from '../../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
-import Footer from "../Home/Footer";
-import Grid from "../../Grid";
-import Defaultbars from "./Defaultbars";
 
 function Errorchecker() {
-    const [file, setFile] = useState(null);
-    const [goal, setGoal] = useState('');
-    const [response, setResponse] = useState('');
-    const [uploadedImages, setUploadedImages] = useState([]);
+  const vid = {
+    vid1: 'Gradient 2.mp4',
+    error: "error.png",
+  };
 
-    useEffect(() => {
-        const fetchImages = async () => {
-            const querySnapshot = await collection(db, 'errorGoals').get();
-            let images = [];
-            querySnapshot.forEach((doc) => {
-                images.push({ id: doc.id, ...doc.data() });
-            });
-            setUploadedImages(images);
-        };
+  const [images, setImages] = useState([]);
+  const [goal, setGoal] = useState('');
+  const [response, setResponse] = useState('');
 
-        fetchImages();
-    }, []);
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages((prevImages) => [...prevImages, ...files]);
+  };
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+  const handleDeleteImage = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
 
-    const handleGoalChange = (e) => {
-        setGoal(e.target.value);
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleDeleteImage = (index) => {
-        setFile((prevImages) => prevImages.filter((_, i) => i !== index));
-      };
-    
+    if (images.length > 0 && goal) {
+      try {
+        const imageUrls = await Promise.all(images.map(async (image) => {
+          const storageRef = ref(storage, `errors/${image.name}`);
+          await uploadBytes(storageRef, image);
+          return getDownloadURL(storageRef);
+        }));
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!file || !goal) {
-            alert("Please upload an image and enter your goal.");
-            return;
-        }
+        await addDoc(collection(db, 'errorGoals'), {
+          goal,
+          imageUrls,
+          timestamp: new Date(),
+        });
 
-        try {
-            // Upload image to Firebase Storage
-            const storageRef = ref(storage, `errors/${file.name}`);
-            await uploadBytes(storageRef, file);
-            const imageURL = await getDownloadURL(storageRef);
+        setImages([]);
+        setGoal('');
+        alert('Images uploaded successfully!');
+      } catch (error) {
+        console.error("Error uploading file or sending data", error);
+      }
+    } else {
+      alert('Please upload images and enter your goal.');
+    }
+  };
 
-            // Add goal and imageURL to Firestore
-            const docRef = await addDoc(collection(db, 'errorGoals'), {
-                goal: goal,
-                imageURL: imageURL,
-                timestamp: new Date()
-            });
-
-            setFile(null);
-            setGoal('');
-            setResponse('');
-
-            alert('Image uploaded successfully!');
-        } catch (error) {
-            console.error("Error uploading file or sending data", error);
-        }
-    };
-
-    return (
-        <div>
-            <video id="background-video" src="Gradient 2.mp4" controls loop autoPlay muted></video>
-            <Grid />
-            <Defaultbars />
-            <div className='current'>
-                <div><img src="error.png" alt="Errorchecker" /></div>
-                <h2>FEA/CFD Analysis Error Solutions</h2>
+  return (
+    <div>
+      <video id="background-video" src={vid.vid1} controls loop autoPlay muted></video>
+      <Grid />
+      <Defaultbars />
+      <div className='current'>
+        <div><img src={vid.error} alt="Errorchecker" /></div>
+        <h2>FEA/CFD Analysis Error Solutions</h2>
+      </div>
+      <div className="errorcheck">
+        <form onSubmit={handleSubmit} className="image-form">
+          <div className="form-group">
+            <label htmlFor="imageUpload">Upload Images of Your Analysis Errors:</label>
+            <div className="custom-file-upload">
+              <label htmlFor="imageUpload" id='hov'>
+                <FaUpload size={30} />
+              </label>
+              <input
+                type="file"
+                id="imageUpload"
+                onChange={handleImageChange}
+                multiple
+                style={{ display: 'none' }}
+                required
+              />
             </div>
-
-            <div className="errorcheck">
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="imageUpload" id="title">Upload Images Of Your Analysis Errors:</label>
-                    <div className="custom-file-upload">
-                        <label htmlFor="imageUpload" id="hov">
-                            <FaUpload size={30} />
-                        </label>
-                        <input
-                            type="file"
-                            id="imageUpload"
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
-                            required
-                        />
-                    </div>
-                    <label htmlFor="description" id="title">What Are You Trying To Achieve?</label>
-                    <textarea
-                        placeholder="Describe what you want to achieve in order to overcome this analysis error..."
-                        value={goal}
-                        onChange={handleGoalChange}
-                        required
-                    ></textarea>
-                    <button type="submit">Generate Clarity</button>
-                </form>
-            </div>
-
-            <div className="uploaded-images">
-                {uploadedImages.map((image) => (
-                    <div key={image.id} className="image-container">
-                        <img src={image.imageURL} alt={`Uploaded Error ${image.id}`} />
-                        <button onClick={() => handleDeleteImage(image.id, image.imageURL)}>
-                            <FaTrashAlt />
-                        </button>
-                    </div>
-                ))}
-            </div>
-
-            <div className="response-container">
-                <div className="response">{response}</div>
-            </div>
-            <button className='report'>
-                Generate Report
-            </button>
-            <Footer />
-        </div>
-    );
+          </div>
+          <div className="uploaded-images">
+            {images.map((image, index) => (
+              <div key={index} className="image-preview">
+                <img src={URL.createObjectURL(image)} alt={`preview-${index}`} />
+                <button type="button" onClick={() => handleDeleteImage(index)}>
+                  <FaTrashAlt />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">What Are You Trying To Achieve?</label>
+            <textarea
+              id="description"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              placeholder='Describe your goal to overcome this analysis error...'
+              required
+            />
+          </div>
+          <button type="submit" id='newbut'>
+            Generate Clarity
+          </button>
+        </form>
+      </div>
+      <div className="response-container">
+        <div className="response">{response}</div>
+      </div>
+      <button className='report'>
+        Generate Report
+      </button>
+      <Footer />
+    </div>
+  );
 }
 
 export default Errorchecker;
