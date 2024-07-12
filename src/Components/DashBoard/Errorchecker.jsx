@@ -86,7 +86,7 @@ function Errorchecker() {
             {images.map((image, index) => (
               <div key={index} className="image-preview">
                 <img src={URL.createObjectURL(image)} alt={`preview-${index}`} />
-                <button type="button" onClick={() => handleDeleteImage(index)}>
+                <button type="button" onClick={() => handleDeleteImage(index)} id='buts'>
                   <FaTrashAlt />
                 </button>
               </div>
@@ -98,7 +98,7 @@ function Errorchecker() {
               id="description"
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
-              placeholder='Describe your project, goals and objectives... MeanAs is here to solve it fast.'
+              placeholder='Please describe your project, goals and objectives... MeanAs is here to help you solve the error very fast and accurately.'
               required
             />
           </div>
