@@ -1,0 +1,81 @@
+.errorcheck {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 280px;
+    height: auto; /* Adjust height to auto to fit content */
+    top: 150px;
+    width: 500px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  }
+
+.errorcheck form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+  }
+
+  .errorcheck .custom-file-upload{
+    height: 120px;
+    width: 450px;
+    border: 2px dashed royalblue;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .errorcheck #title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 0;
+    font-weight: 550;
+    color: #000925;
+  }
+  
+  .errorcheck #hov:hover {
+    color: royalblue /* change color on hover if desired */
+  }
+  
+  
+  .errorcheck textarea {
+    margin: 10px 0;
+    padding: 10px;
+    height: 90px;
+    width: 450px;
+    border: 2px solid royalblue;
+    border-radius: 5px;
+    color: black;
+    font-size: 14px;
+  }
+ 
+  
+  .errorcheck button {
+    padding: 10px 20px;
+    background-color: #000925;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    margin-right: 0px;
+  }
+  
+  .errorcheck button:hover {
+    background-color: #ff8800; 
+    border: 1px solid black;
+  }
+  

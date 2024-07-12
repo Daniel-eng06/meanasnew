@@ -8,7 +8,9 @@ import Defaultbars from "./Defaultbars";
 
 function Postprocess(){
     const vid ={
-        vid1:"Gradient 2.mp4"
+        vid1:"Gradient 2.mp4",
+        post:"post-process.png",
+        
     }
     return(
         <div>
@@ -17,6 +19,10 @@ function Postprocess(){
            </video>
             <Grid/>
             <Defaultbars/>
+            <div className='current'>
+                <div><img src={vid.post} alt="Post-process" /></div>
+                <h2>Clarity & Accuracy For Post-Processing</h2>
+            </div>
             <div className="postprocess">
                 Hi
             </div>

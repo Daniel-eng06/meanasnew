@@ -63,6 +63,10 @@
     padding: 22px;
     position: relative;
   }
+
+  .custom-file-upload #hov:hover {
+    color: royalblue /* change color on hover if desired */
+  }
   
   .custom-file-upload label {
     display: flex;

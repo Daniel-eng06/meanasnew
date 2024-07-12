@@ -85,7 +85,7 @@ function Preprocess() {
           <div className="form-group">
             <label htmlFor="imageUpload">Upload 3D Images Of Your Model:</label>
             <div className="custom-file-upload">
-              <label htmlFor="imageUpload">
+              <label htmlFor="imageUpload" id='hov'>
                 <FaUpload size={30} />
               </label>
               <input
