@@ -6,7 +6,9 @@ import Dashboard from "./Components/DashBoard/Dashboard";
 import Preprocess from './Components/DashBoard/Pre-process.jsx';
 import Errorchecker from './Components/DashBoard/Errorchecker.jsx';
 import Postprocess from './Components/DashBoard/Post-Process.jsx';
-//import Auth from "./components/Auth";
+import Authentication from './Components/Home/Authentication.jsx';
+import FreeAuth from './Components/Home/FreeAuth.jsx';
+import Pricing from './Components/Home/Pricing.jsx';
 // import Subscription from "./components/Subscription";
 // import Upload from "./components/Upload";
 
@@ -19,7 +21,9 @@ function MeanAsApp() {
                       <Route index path="/Preprocess" element={<Preprocess/>}/>
                       <Route index path="/Errorchecker" element={<Errorchecker/>}/>
                       <Route index path="/Postprocess" element={<Postprocess/>}/>
-                      {/*<Route path="/auth" component={Auth} />*/}
+                      <Route index path="/Authentication" element={<Authentication/>}/>
+                      <Route index path="/FreeAuth" element={<FreeAuth/>}/>
+                      <Route index path="/Pricing" element={<Pricing/>}/>
                       {/*<Route path="/subscribe" component={Subscription} />*/}
                       {/*<Route path="/upload" component={Upload} />*/}
                     </Routes>

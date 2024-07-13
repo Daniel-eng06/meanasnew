@@ -18,8 +18,8 @@ function Benefits() {
             ))}
             </div>
             <ul className="callbar">
-                <li><Link to="#" id="call3">Try For Free</Link></li>
-                <li><Link to="#" id="call1">Access Clarity Now</Link></li>
+                <li><Link to="/Authentication" id="call3">Try For Free</Link></li>
+                <li><Link to="/Authentication" id="call1">Access Clarity Now</Link></li>
             </ul>
         </div>
 

@@ -1,17 +1,30 @@
-import React from "react";
-import "./Section4.css";
-import {Link} from "react-router-dom";
+import React, { useState } from "react";
+import "./Pricing.css";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { Link} from "react-router-dom";
 
-function Billing() {
+
+
+function Pricing(){
+    const image={
+        vid1: "Gradient 2.mp4",
+    };
     const img ={
         spot:"record.png",
         spot1:"record (1).png",
         spot2:"record (2).png",
         spot3:"check-mark.png"
-    }
+    };
     return(
-        <div className="section4">
-            <h1>How Can You Get Started?</h1>
+        <div className="allprices">
+            <video id="background-video" src={image.vid1} controls loop autoPlay muted />
+            <Navbar/>
+            <div className="price">
+                <h1>Our Pricing Plans</h1>
+                <p>Choose the plan that's right for you. Whether you are a small business, a growing enterprise, or an individual, we have a plan that fits your needs and budget. Explore our flexible pricing options and get started today!</p>
+            </div>
+            <div className="section4">
             <div className="bill">
                 <div id='free'>
                     <h3 className="spo">
@@ -26,7 +39,7 @@ function Billing() {
                         <li><div><img src={img.spot3} alt=""/></div></li>
                         <li><div><img src={img.spot3} alt=""/></div></li>
                     </ul>
-                    <Link className="go" to="/FreeAuth">Try For Free</Link>
+                    <Link className="go" to="/Dashboard">Try For Free</Link>
                 </div>
 
                 <div id="unique">
@@ -63,8 +76,11 @@ function Billing() {
                 </div>
             </div>
         </div>
+
+
+            <Footer/>
+        </div>
     )
+};
 
-}
-
-export default Billing;
+export default Pricing;
