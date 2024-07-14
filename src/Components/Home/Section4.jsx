@@ -51,7 +51,7 @@ function Billing() {
                         <div id="spot"><img src={img.spot1} alt=""/></div>
                         <h3 id="green">Unlimited Plan</h3>
                     </h3>
-                    <p id="price">$19.99<span>/month, billed annually</span></p>
+                    <p id="price">$24.99<span>/month, billed annually</span></p>
                     <ul className="pack">
                         <li><p>Unlimited plan includes:</p></li>
                         <li><div><img src={img.spot3} alt=""/></div></li>

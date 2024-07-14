@@ -29,7 +29,7 @@ function Salescopy() {
                 <li><Link id="call1" to="/Authentication">Access Clarity Now</Link></li>
             </ul>
             <div className="software">
-                <p>Trusted to Interpret Videos & Images From</p>
+                <p>Trusted to Assist and Interpret Videos, Images and Data from</p>
                 <div className="complogo">
                     <div id="complog"><img src={softwareimg.img1} alt="Ansys"/></div>
                     <div id="complog"><img src={softwareimg.img2} alt="Abaqus"/></div>
