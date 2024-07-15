@@ -7,7 +7,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <nav className="footer-nav">
-          <Link href="#">About</Link>
+          <Link href="/About">About</Link>
           <Link href="#">Features</Link>
           <Link to="/FreeAuth">Dashboard</Link>
           <Link to="/Pricing">Pricing</Link>

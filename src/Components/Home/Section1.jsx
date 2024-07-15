@@ -26,7 +26,7 @@ function Salescopy() {
             </div>
             <ul className="call">
                 <li><Link id="call2" to="/FreeAuth">Try For Free</Link></li>
-                <li><Link id="call1" to="/Authentication">Access Clarity Now</Link></li>
+                <li><Link id="call1" to="/Pricing">Access Clarity Now</Link></li>
             </ul>
             <div className="software">
                 <p>Trusted to Assist and Interpret Videos, Images and Data from</p>

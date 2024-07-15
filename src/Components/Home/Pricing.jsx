@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Pricing.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -33,11 +33,13 @@ function Pricing(){
                     </h3>
                     <p id="price">Free<span>/14 Days </span></p>
                     <ul className="pack">
-                        <li><p>Explorer plan includes:</p></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
+                        <li id="pri"><p>Explorer plan includes:</p></li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Access to all AI-powered features</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>5 GB storage</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Limited to 5 analysis projects per day</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Pre-Processing</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
                     </ul>
                     <Link className="go" to="/Dashboard">Try For Free</Link>
                 </div>
@@ -50,11 +52,13 @@ function Pricing(){
                     </h3>
                     <p id="price">$9.99<span>/month, billed annually</span></p>
                     <ul className="pack">
-                        <li><p>Standard plan includes:</p></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
+                        <li id="pri"><p>Standard plan includes:</p></li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Access to all AI-powered features</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>50 GB storage</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Limited to 50 analysis projects per month</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Pre-Processing</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
                     </ul>
                     <Link className="go1" to="/Authentication">Get Started</Link>
                 </div>
@@ -66,11 +70,13 @@ function Pricing(){
                     </h3>
                     <p id="price">$24.99<span>/month, billed annually</span></p>
                     <ul className="pack">
-                        <li><p>Unlimited plan includes:</p></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
-                        <li><div><img src={img.spot3} alt=""/></div></li>
+                        <li id="pri"><p>Unlimited plan includes:</p></li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Access to all AI-powered features</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Unlimited storage</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Unlimited analysis projects per month</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Pre-Processing</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
+                        <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
                     </ul>
                     <Link className="go" to="/Authentication">Get Started </Link>
                 </div>
