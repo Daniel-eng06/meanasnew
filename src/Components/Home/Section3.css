@@ -133,3 +133,53 @@
     max-height: 100%;
     object-fit: cover;
 }
+
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    .section3 h1 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .steps, .steps1 {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        border: 1px solid silver;
+        margin-bottom: 20px;
+    }
+
+    .steps div, .steps1 div, .steps #process, .steps1 #process {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+        margin: 10px 0;
+    }
+
+    .testimony {
+        width: 95%;
+        padding: 30px 10px 20px;
+        gap: 20px;
+        border-radius: 15px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+        height: auto;
+    }
+
+    #testa {
+        font-size: 14px;
+        width: 95%;
+    }
+
+    #testam {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .testimony div {
+        width: 30px;
+        height: 30px;
+        left: 5px;
+        top: 5px;
+    }
+}

@@ -30,7 +30,7 @@ function Navbar() {
             <ul className='dropdown'>
                 <li>
                     <div className='dropbar' onClick={handleDropdownClick}>
-                        <FaBars size={30} /> {/* Use the icon here */}
+                        <FaBars size={25} /> {/* Use the icon here */}
                     </div>
                 </li>
                 {isDropdownVisible && (

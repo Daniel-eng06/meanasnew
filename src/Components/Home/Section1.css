@@ -108,3 +108,67 @@
     border: 12px solid silver;
     border-radius: 30px;
 }
+
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    .heading {
+        width: 100%;
+        padding: 0 10px;
+        margin-top: -30px;
+    }
+
+    .heading h1 {
+        font-size: 32px;
+        line-height: 1.3;
+        font-weight:bolder;
+    }
+
+    .heading p {
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .call {
+        flex-direction: column;
+        gap: 40px;
+        margin-top: -15px;
+        font-weight: 500;
+    }
+
+    .call li #call1,
+    .call li #call2 {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+
+    .software p{
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .complogo {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 5px;
+    }
+
+    .complogo #complog {
+        width: 120px;
+        height: 60px;
+    }
+
+    .video {
+        width: 100%;
+        height: 280px;
+        margin-top: -20px ;
+    }
+
+    .video video {
+        width: 100%;
+        height: 100%;
+        border: 8px solid silver;
+        border-radius: 20px;
+    }
+}

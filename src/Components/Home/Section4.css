@@ -171,3 +171,45 @@
     font-size: 14px;
     font-weight: 500;
   }
+
+
+  @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    .section4 {
+        margin-bottom: 50px; /* Adjust as needed */
+    }
+
+    .section4 h1 {
+        font-size: 30px; 
+        margin-bottom: 0px; 
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .bill {
+        grid-template-columns: 1fr; 
+        row-gap: 50px; 
+    }
+
+    .bill #free, 
+    .bill #pro, 
+    .bill #unique {
+        width: 90%; /* Full width for smaller screens */
+        margin: 0 auto; /* Center alignment */
+        padding: 20px; /* Reduced padding */
+    }
+
+    #price {
+        font-size: 24px; /* Smaller price font */
+        margin-top: 15px; /* Adjusted spacing */
+    }
+
+    .pack {
+        width: 100%; /* Full width for smaller screens */
+        margin-bottom: 10px; /* Adjust spacing */
+    }
+
+    .go1, .go {
+        padding: 8px 20px; /* Smaller button padding */
+        font-size: 15px; /* Smaller font size */
+    }
+}
