@@ -237,3 +237,50 @@
     font-weight: 590;
 }
 
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    .fullbar {
+      flex-direction: column;
+      margin-left: 0;
+      margin-top: 70%;
+    }
+  
+    .flatbar {
+      position: relative;
+      width: 100%;
+      left: 0;
+      margin-left: 0;
+    }
+  
+    .flatbar #right {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
+  
+    .topbar {
+      margin-left: 0;
+      width: 100%;
+      height: auto;
+      margin-top: 20px;
+      padding: 20px;
+    }
+  
+    .select {
+      flex-direction: column;
+      row-gap: 20px;
+      top: auto;
+      left: auto;
+    }
+  
+    #box {
+      width: 100%;
+      height: auto;
+    }
+  }
+  

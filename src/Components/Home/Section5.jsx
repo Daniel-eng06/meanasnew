@@ -23,7 +23,8 @@ function Facts() {
           <div id="pops" key={item.id}>
             <h3 onClick={() => handleToggle(index)}>
                 {item.h3}
-                <div id="down"><img src={item.down} alt=""/></div></h3>
+                <div id="down"><img src={item.down} alt=""/></div>
+            </h3>
             <p className={expandedIndex === index ? "show" : ""}>{item.sub}</p>
           </div>
         ))}

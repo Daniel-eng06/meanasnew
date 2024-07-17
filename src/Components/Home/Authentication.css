@@ -80,7 +80,36 @@
   
   button:hover {
     background-color: #ff8800;
-    
   }
   
+
+  @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    .auth {
+      width: 90%;
+      height: auto;
+      padding: 15px;
+      margin-top: 80px;
+    }
+  
+    .meanaslogo {
+      width: 180px;
+      height: 60px;
+    }
+  
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      font-size: 14px;
+    }
+  
+    button {
+      width: 70%;
+      font-size: 16px;
+    }
+
+    .labs{
+      margin-left: 0;
+      font-size: 16px;
+    }
+  }
   

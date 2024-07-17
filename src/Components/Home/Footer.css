@@ -43,3 +43,30 @@
 .footer-nav a:hover {
   color: #ff8800;
 }
+
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+  .footer {
+      padding: 20px 0;
+      height: auto; /* Allow height to adjust based on content */
+  }
+
+  .footer-content {
+      padding: 0 5px;
+  }
+
+  .footer p {
+      font-size: 0.9em; /* Smaller font size */
+  }
+
+  .footer-nav {
+      flex-direction: column; /* Stack the nav items vertically */
+      gap: 15px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+  }
+
+  .footer-nav a {
+      font-size: 14px; /* Smaller font size */
+  }
+}

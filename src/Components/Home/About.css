@@ -54,3 +54,36 @@
     text-decoration: underline;
 }
 
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    .about {
+      padding: 10px;
+    }
+  
+    .about-section {
+      padding: 20px;
+      border-radius: 20px;
+      margin: 10px;
+      margin-top: 100px;
+      width:98%;
+    }
+  
+    .about-section h1 {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+  
+    .about-section p,
+    .about-section ul {
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+  
+    .about-section ul li {
+      margin-bottom: 5px;
+      margin-left: 10px;
+    }
+  }
+  

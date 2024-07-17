@@ -186,8 +186,10 @@
     }
 
     .bill {
-        grid-template-columns: 1fr; 
+        grid-template-columns:1fr; 
         row-gap: 50px; 
+        justify-content: center;
+
     }
 
     .bill #free, 
@@ -199,13 +201,24 @@
     }
 
     #price {
-        font-size: 24px; /* Smaller price font */
+        font-size: 30px; /* Smaller price font */
         margin-top: 15px; /* Adjusted spacing */
     }
 
     .pack {
         width: 100%; /* Full width for smaller screens */
-        margin-bottom: 10px; /* Adjust spacing */
+        margin-bottom: -30px; /* Adjust spacing */
+    }
+
+    #pri div{
+        width:20px;
+        height: 15px;
+    }
+
+    #pri div img{
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
     }
 
     .go1, .go {
