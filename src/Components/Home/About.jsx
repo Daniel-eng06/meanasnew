@@ -11,7 +11,7 @@ function About() {
     }
     return(
         <div className='about'>
-            <video id="background-video"
+            <video id="background-video1"
                   src={vid.vid1} controls loop autoPlay muted>
             </video>
             <Navbar/>
