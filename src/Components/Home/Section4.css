@@ -203,6 +203,7 @@
     #price {
         font-size: 30px; /* Smaller price font */
         margin-top: 15px; /* Adjusted spacing */
+        text-align: left;
     }
 
     .pack {

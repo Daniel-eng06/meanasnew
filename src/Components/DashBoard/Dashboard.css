@@ -5,9 +5,3 @@
     flex-direction: column;
 }
 
-@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
-    .dashboard {
-      padding: 10px;
-    }
-  }
-  

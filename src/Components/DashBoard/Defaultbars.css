@@ -17,7 +17,7 @@
     display: flex;
     justify-content: end;
     align-items: center;
-    width:1129px;
+    width:85%;
     margin-left: 0%;
     left: 220px;
 }
@@ -150,3 +150,160 @@
     object-fit: cover;
 }
 
+.phoneversion{
+    display: none;
+}
+
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    
+    .flatbars {
+        display: none;
+    }
+    
+    .sidebars {
+          display: none;
+    }
+    
+    .phoneversion {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.3); /* semi-transparent background */
+        backdrop-filter: blur(10px); /* blur effect */
+        -webkit-backdrop-filter: blur(10px); /* Safari support */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        height: auto;
+    }
+
+    .dropdowns {
+        width: 100%;
+        list-style: none;
+        padding: 0;
+        color: #000925;
+    }
+
+    .dropbarps {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        width: 100%;
+        margin-left: -5%;
+    }
+
+    .dropdown-lists {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        background-color: #f0f0f0;
+        top: 70px;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .dropdown-lists li {
+        list-style: none;
+        width: 100%;
+        text-align: start;
+        padding: 10px 0;
+        margin-left:0px;
+        display:flex;
+    
+    }
+
+    .dashlis {
+        text-decoration: none;
+        color:#000925;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 30%;
+        gap: 10px;
+    }
+
+    .dashlis:hover{
+        color:#ff8800;
+    }
+
+
+    #upgrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        margin: 20px 5px;
+        margin-left:20px;
+        width: 85%;
+        padding: 10px 2px;
+        border: 2px solid silver;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        text-decoration: none;
+    }
+
+    #upgrap div{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        gap:10px
+    }
+
+    #upgrap:hover{
+        border: 3px solid #ff8800;
+    }
+
+    #upgrap h3 {
+        text-decoration: none;
+        margin: 0;
+        font-size: 15px;
+        color:#000925;
+    }
+
+    #upgrap p {
+        margin: 5px 15px 0;
+        font-size: 13px;
+        color: #666;
+        text-decoration: none;
+        width: 80%;
+    }
+
+    .compilogop {
+        display: block;
+        text-align: center;
+        margin: 15px 12px 15px 0px;
+    }
+
+    .compilogop img {
+        width: 120px;
+        height: auto;
+    }
+
+    .flatbarp {
+        display: flex;
+        width: 100%;
+        position: relative;
+        gap:5px
+    }
+
+    .alliconp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #dass {
+        width: 25px;
+        height: 25px;
+    }
+
+    #rightp, #besidep {
+        margin: 0 10px;
+    }
+}
