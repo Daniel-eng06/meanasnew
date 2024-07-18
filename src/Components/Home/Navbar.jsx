@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'; 
-import "./Navbar.css"
+import "./Navbar.css";
 
 
 function Navbar() {
@@ -21,7 +21,7 @@ function Navbar() {
             </Link>
            <ul className="menu">
                <li><Link id="l1" to="/About">About</Link></li>
-               <li><Link id="l1" to="">Features</Link></li>
+               <li><Link id="l1" to="/Features">Features</Link></li>
                <li><Link to="/FreeAuth" id="l1">Dashboard</Link></li>
            </ul>
             <ul className="try">
