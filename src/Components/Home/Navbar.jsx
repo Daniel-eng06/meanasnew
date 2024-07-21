@@ -36,7 +36,7 @@ function Navbar() {
                 {isDropdownVisible && (
                     <ul className='dropdown-list'>
                         <li><Link id="l1" to="/About">About</Link></li>
-                        <li><Link id="l1" to="">Features</Link></li>
+                        <li><Link id="l1" to="/Features">Features</Link></li>
                         <li><Link to="/FreeAuth" id="l1">Dashboard</Link></li>
                         <li><Link id="try" to="/FreeAuth">Try For Free</Link></li>
                     </ul>
