@@ -174,10 +174,10 @@ function Preprocess() {
         <div className="response-container">
           <div className="response">{response}</div>
         </div>
-      {/* )} */}
-      <button className='report'>
+        <button className='report'>
             Generate Report
-      </button>
+        </button>
+      {/* )} */}
       <Footer />
     </div>
   );

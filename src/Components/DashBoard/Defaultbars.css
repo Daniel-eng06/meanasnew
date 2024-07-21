@@ -170,7 +170,7 @@
         flex-direction: row;
         align-items: center;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 0px;
         background: rgba(255, 255, 255, 0.3); /* semi-transparent background */
         backdrop-filter: blur(10px); /* blur effect */
         -webkit-backdrop-filter: blur(10px); /* Safari support */
@@ -214,7 +214,6 @@
         padding: 10px 0;
         margin-left:0px;
         display:flex;
-    
     }
 
     .dashlis {

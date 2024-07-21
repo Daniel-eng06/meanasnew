@@ -56,7 +56,7 @@ function Errorchecker() {
   };
 
   return (
-    <div>
+    <div id='err'>
       <video id="background-video" src={vid.vid1} controls loop autoPlay muted></video>
       <Grid />
       <Defaultbars />

@@ -18,7 +18,7 @@ function Pricing(){
     };
     return(
         <div className="allprices">
-            <video id="background-video3" src={image.vid1} controls loop autoPlay muted />
+            <video id="background-video" src={image.vid1} controls loop autoPlay muted />
             <Navbar/>
             <div className="price">
                 <h1>Our Pricing Plans</h1>

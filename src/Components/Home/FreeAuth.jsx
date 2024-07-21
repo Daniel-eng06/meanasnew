@@ -56,7 +56,7 @@ const FreeAuth = () => {
 
   return (
     <div className="auth">
-      <video id="background-video2" src={image.vid1} controls loop autoPlay muted />
+      <video id="background-video" src={image.vid1} controls loop autoPlay muted />
       <Link className="meanaslogo" to="/">
         <img src={image.MeanAsLogo} alt="MeanAs Logo" />
       </Link>
