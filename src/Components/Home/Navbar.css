@@ -64,6 +64,7 @@
     font-weight: 500;
     border-radius: 8px;
     background-color: #ff8800;
+
 }
 
 .try li #try:hover{
@@ -75,6 +76,47 @@
 .dropdown{
     display: none;
 }
+
+.nav #besides{
+    display: none;
+    position:absolute;
+    margin-right:-70em;
+}
+
+.nav #besides .allicons{
+    width:35px;
+    height:35px;
+}
+
+.dropdown-menuz {
+    position: absolute;
+    top: 3.65em;
+    left: -4em;
+    background: rgba(255, 255, 255, 0.3); /* semi-transparent background */
+    backdrop-filter: blur(10px); /* blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-itemz {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000925;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 500;
+}
+
+.dropdown-itemz:hover {
+    color:#ff8800
+}
+
+
+
+
 
 
 @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {

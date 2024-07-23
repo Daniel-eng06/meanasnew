@@ -1,52 +1,75 @@
 import React, { useState } from 'react';
 import "./SideBar.css"
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaBars } from 'react-icons/fa';
+import { auth, signOut } from '../../firebase';
 
 function SideBar() {
-    const dashimg ={
-        not:"notification.png",
-        user:"user.png",
-        over:"window.png",
-        proj:"layers.png",
-        team:"group.png",
-        assis:"assistant.png",
-        pre:"pre-process.png",
-        post:"post-process.png",
-        error:"error.png",
-        upgrad:"clean.png"
+    const dashimg = {
+        not: "notification.png",
+        user: "user.png",
+        over: "window.png",
+        proj: "layers.png",
+        team: "group.png",
+        assis: "assistant.png",
+        pre: "pre-process.png",
+        post: "post-process.png",
+        error: "error.png",
+        upgrad: "clean.png"
     }
 
-    const [isDropdownVisibles, setIsDropdownVisibles] = useState(false);
+    const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const [isUserDropdownVisible, setIsUserDropdownVisible] = useState(false);
 
-    const handleDropdownClicks = () => {
-        setIsDropdownVisibles(!isDropdownVisibles);
+    const handleMenuClick = () => {
+        setIsMenuVisible(!isMenuVisible);
     };
 
-    return(
+    const handleUserDropdownClick = () => {
+        setIsUserDropdownVisible(!isUserDropdownVisible);
+    };
+
+    const handleLogout = () => {
+        signOut(auth).then(() => {
+            console.log("User signed out");
+            // Redirect to login page or show a message
+        }).catch((error) => {
+            console.error("Error signing out: ", error);
+        });
+    };
+
+    return (
         <div className='fullbar'>
             <div className="flatbar">
                 <div id="right">
-                    <div className="allicon"><img id="das" src={dashimg.not} alt="#"/></div>
+                    <div className="allicon"><img id="das" src={dashimg.not} alt="#" /></div>
                 </div>
-                <div id="beside">
-                    <div className="allicon"><img id="das" src={dashimg.user} alt="#"/></div>
+                <div id="besides">
+                    <div className="allicons">
+                        <img id="dass" src={dashimg.user} alt="#" onClick={handleUserDropdownClick} />
+                        {isUserDropdownVisible && (
+                            <div className="dropdown-menus">
+                                <Link to="/profile" className="dropdown-items">View Profile</Link>
+                                <div className="dropdown-items" onClick={handleLogout}>Logout</div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
             <div className="sidebar">
                 <Link className="compilogo" to="/">
-                    <img src="NobgLogo.png"/>
+                    <img src="NobgLogo.png" />
                 </Link>
                 <ul className="dashy">
-                    <Link className="dashli" to="/Dashboard"><div className="dash"><img id="das" src={dashimg.over}/></div>Overview</Link>
-                    <Link className="dashli"><div className="dash"><img id="das" src={dashimg.proj}/></div>Projects</Link>
-                    <Link className="dashli"><div className="dash"><img id="das" src={dashimg.team}/></div>Team Connect</Link>
-                    <Link className="dashli"><div className="dash"><img id="das" src={dashimg.assis}/></div>AI Assistant</Link>
+                    <Link className="dashli" to="/Dashboard"><div className="dash"><img id="das" src={dashimg.over} /></div>Overview</Link>
+                    <Link className="dashli" to="#"><div className="dash"><img id="das" src={dashimg.proj} /></div>Projects</Link>
+                    <Link className="dashli" to="#"><div className="dash"><img id="das" src={dashimg.team} /></div>Team Connect</Link>
+                    <Link className="dashli" to="#"><div className="dash"><img id="das" src={dashimg.assis} /></div>AI Assistant</Link>
                 </ul>
                 <Link id="upgra" to='/Pricing'>
                     <div>
                         <div className="allicon">
-                            <img id="das" src={dashimg.upgrad} alt="#"/>
+                            <img id="das" src={dashimg.upgrad} alt="#" />
                         </div>
                         <h3>Upgrade to Unlimited Plan</h3>
                     </div>
@@ -57,11 +80,11 @@ function SideBar() {
             <div className='phoneversion'>
                 <ul className='dropdowns'>
                     <li>
-                        <div className='dropbarps' onClick={handleDropdownClicks}>
+                        <div className='dropbarps' onClick={handleMenuClick}>
                             <FaBars size={25} /> {/* Use the icon here */}
                         </div>
                     </li>
-                    {isDropdownVisibles && (
+                    {isMenuVisible && (
                         <ul className='dropdown-lists'>
                             <li><Link className="dashlis" to="/Dashboard"><div className="dashs"><img id="dass" src={dashimg.over} alt="Overview" /></div>Overview</Link></li>
                             <li><Link className="dashlis" to="#"><div className="dashs"><img id="dass" src={dashimg.proj} alt="Projects" /></div>Projects</Link></li>
@@ -82,14 +105,22 @@ function SideBar() {
                     )}
                 </ul>
                 <Link className="compilogop" to="/">
-                        <img src="NobgLogo.png"/>
+                    <img src="NobgLogo.png" />
                 </Link>
                 <div className="flatbarp">
                     <div id="rightp">
-                        <div className="alliconp"><img id="dass" src={dashimg.not} alt="#"/></div>
+                        <div className="alliconp"><img id="dass" src={dashimg.not} alt="#" /></div>
                     </div>
-                    <div id="besidep">
-                        <div className="alliconp"><img id="dass" src={dashimg.user} alt="#"/></div>
+                    <div id="besides">
+                        <div className="allicons">
+                            <img id="dass" src={dashimg.user} alt="#" onClick={handleUserDropdownClick} />
+                            {isUserDropdownVisible && (
+                                <div className="dropdown-menus">
+                                    <Link to="/profile" className="dropdown-items">View Profile</Link>
+                                    <div className="dropdown-items" onClick={handleLogout}>Logout</div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,19 +132,19 @@ function SideBar() {
             <div className="select">
                 <div id="box">
                     <Link id="opt" to="/Preprocess">
-                        <div className="allbox"><img id="das" src={dashimg.pre}/></div>
+                        <div className="allbox"><img id="das" src={dashimg.pre} /></div>
                         <p>Clarity & Accuracy For Pre-Processing</p>
                     </Link>
                 </div>
-                <div id="box" >
+                <div id="box">
                     <Link id="opt" to="/Errorchecker">
-                        <div className="allbox"><img id="das" src={dashimg.error}/></div>
+                        <div className="allbox"><img id="das" src={dashimg.error} /></div>
                         <p>FEA/CFD Analysis Error Solutions</p>
                     </Link>
                 </div>
                 <div id="box">
                     <Link id="opt" to="/Postprocess">
-                        <div className="allbox"><img id="das" src={dashimg.post}/></div>
+                        <div className="allbox"><img id="das" src={dashimg.post} /></div>
                         <p>Clarity & Accuracy For Post-Processing</p>
                     </Link>
                 </div>

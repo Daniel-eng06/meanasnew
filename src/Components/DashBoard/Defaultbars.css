@@ -1,4 +1,4 @@
-.defaultbars{
+.defaultbars {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,41 +7,67 @@
     height: auto;
 }
 
-.flatbars{
+.flatbars {
     position: absolute;
     height: 60px;
     top: 0;
-    background: rgba(255, 255, 255, 0.7); 
-    backdrop-filter: blur(10px); 
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
     justify-content: end;
     align-items: center;
-    width:85%;
+    width: 85%;
     margin-left: 0%;
     left: 220px;
 }
-.flatbars #rights{
-     margin-right:-73%;
-     margin-left: 87%;
-     display: flex;
+
+.flatbars #rights {
+    margin-right: -73%;
+    margin-left: 87%;
+    display: flex;
 }
-.flatbars #rights p{
+
+.flatbars #rights p {
     position: absolute;
 }
 
-.flatbars #besides{
+.flatbars #besides {
     max-width: 10%;
     margin-left: 78%;
+    position: relative;
 }
 
+.dropdown-menu {
+    position: absolute;
+    top: 2.65em;
+    left: -5em;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+}
 
-.sidebars{
+.dropdown-item {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000925;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dropdown-item:hover {
+    color:#ff8800
+}
+
+.sidebars {
     height: 900px;
     width: 220px;
     position: relative;
-    background: rgba(255, 255, 255, 0.7); 
-    backdrop-filter: blur(10px); 
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
@@ -49,36 +75,36 @@
     margin-left: 0px;
 }
 
-.compilogos{
+.compilogos {
     width: 150px;
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     top: -1%;
-    left:13%;
+    left: 13%;
     position: absolute;
 }
 
-.compilogos img{
+.compilogos img {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
 }
 
-.sidebars .dashys{
-  display: flex;
-  align-items: start;
-  justify-content: start;
-  width:210px;
-  gap: 1px;
-  flex-direction: column;
-  list-style: none;
-  position: absolute;
-  top: 12%;
+.sidebars .dashys {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 210px;
+    gap: 1px;
+    flex-direction: column;
+    list-style: none;
+    position: absolute;
+    top: 10%;
 }
 
-.sidebars .dashys .dashlis{
+.sidebars .dashys .dashlis {
     font-size: 16px;
     display: flex;
     align-items: start;
@@ -87,15 +113,14 @@
     color: #000925;
     margin-left: 0px;
     padding: 0px 30px;
-    gap:10px;
+    gap: 10px;
 }
 
-.sidebars .dashys .dashlis:hover{
+.sidebars .dashys .dashlis:hover {
     color: #ff8800;
 }
 
-
-#upgras{
+#upgras {
     width: 220px;
     padding: 2px;
     border: 3px solid silver;
@@ -107,31 +132,30 @@
     margin-top: 425px;
 }
 
-#upgras:hover{
+#upgras:hover {
     border: 3px solid #fa931d;
 }
 
-#upgras div{
+#upgras div {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
-#upgras div h3{
+#upgras div h3 {
     color: #000925;
     font-size: 14px;
     margin-left: 0;
 }
 
-#upgras p{
+#upgras p {
     color: rgb(70, 67, 67);
     font-size: 13px;
     padding: 2px 15px 5px 30px;
 }
 
-
-.sidebars #upgras{
+.sidebars #upgras {
     text-decoration: none;
     display: flex;
     justify-content: center;
@@ -141,41 +165,39 @@
     color: #000925;
 }
 
-
-.allicons , .dashs{
-    width:25px;
-    height:25px;
+.allicons, .dashs {
+    width: 25px;
+    height: 25px;
 }
-.allicons #dass , .dashs #dass{
+
+.allicons #dass, .dashs #dass {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
 }
 
-.phoneversion{
+.phoneversion {
     display: none;
 }
 
-
 @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
-    
     .flatbars {
         display: none;
     }
-    
+
     .sidebars {
-          display: none;
+        display: none;
     }
-    
+
     .phoneversion {
         display: flex;
         flex-direction: row;
         align-items: center;
         width: 100%;
         margin-top: 0px;
-        background: rgba(255, 255, 255, 0.3); /* semi-transparent background */
-        backdrop-filter: blur(10px); /* blur effect */
-        -webkit-backdrop-filter: blur(10px); /* Safari support */
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.18);
         position: relative;
         height: auto;
@@ -204,7 +226,7 @@
         flex-direction: column;
         position: absolute;
         background-color: #f0f0f0;
-        top: 70px;
+        top: 65px;
         width: 100%;
         z-index: 1000;
     }
@@ -214,13 +236,13 @@
         width: 100%;
         text-align: start;
         padding: 10px 0;
-        margin-left:0px;
-        display:flex;
+        margin-left: 0px;
+        display: flex;
     }
 
     .dashlis {
         text-decoration: none;
-        color:#000925;
+        color: #000925;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -228,10 +250,9 @@
         gap: 10px;
     }
 
-    .dashlis:hover{
-        color:#ff8800;
+    .dashlis:hover {
+        color: #ff8800;
     }
-
 
     #upgrap {
         display: flex;
@@ -240,7 +261,7 @@
         flex-direction: column;
         text-align: center;
         margin: 20px 5px;
-        margin-left:20px;
+        margin-left: 20px;
         width: 85%;
         padding: 10px 2px;
         border: 2px solid silver;
@@ -249,14 +270,14 @@
         text-decoration: none;
     }
 
-    #upgrap div{
-        display:flex;
+    #upgrap div {
+        display: flex;
         align-items: center;
         justify-content: center;
-        gap:10px
+        gap: 10px;
     }
 
-    #upgrap:hover{
+    #upgrap:hover {
         border: 3px solid #ff8800;
     }
 
@@ -264,7 +285,7 @@
         text-decoration: none;
         margin: 0;
         font-size: 15px;
-        color:#000925;
+        color: #000925;
     }
 
     #upgrap p {
@@ -290,7 +311,7 @@
         display: flex;
         width: 100%;
         position: relative;
-        gap:5px
+        gap: 5px;
     }
 
     .alliconp {
@@ -307,4 +328,17 @@
     #rightp, #besidep {
         margin: 0 10px;
     }
+
+    .dropdown-menu {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        background-color: #f0f0f0;
+        top: 48px;
+        max-width: 50em;
+        z-index: 1000;
+        right:-1.5em;
+    }
+    
 }

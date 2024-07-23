@@ -25,7 +25,7 @@
 
 .flatbar #right{
      margin-right:-73%;
-     margin-left: 87%;
+     margin-left: 85.8%;
      display: flex;
 }
 .flatbar #right p{
@@ -237,6 +237,34 @@
     font-weight: 590;
 }
 
+#besides{
+    margin-right: 5%;
+}
+
+.dropdown-menus {
+    position: absolute;
+    top: 3.72em;
+    right:0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-items {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000925;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dropdown-items:hover {
+    color:#ff8800
+}
+
 
 @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
     .fullbar {
@@ -290,6 +318,18 @@
         padding:0px;
         margin:0px;
         font-size: 20px;
+    }
+
+    .dropdown-menus {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        background-color: #f0f0f0;
+        top: 48px;
+        max-width: 50em;
+        z-index: 1000;
+        right:-0.5em;
     }
   }
   
