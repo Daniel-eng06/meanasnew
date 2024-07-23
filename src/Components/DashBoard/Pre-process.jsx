@@ -19,6 +19,7 @@ function Preprocess() {
   const [option, setOption] = useState('');
   const [customOption, setCustomOption] = useState('');
   const [analysisType, setAnalysisType] = useState(''); 
+  const [materials, setMaterials] = useState([]); // State to store selected materials
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(''); // State to store ChatGPT response
 
@@ -29,6 +30,15 @@ function Preprocess() {
 
   const handleDeleteImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  const handleMaterialsChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setMaterials((prevMaterials) => [...prevMaterials, value]);
+    } else {
+      setMaterials((prevMaterials) => prevMaterials.filter((material) => material !== value));
+    }
   };
 
   const fetchChatGPTResponse = async () => {
@@ -52,12 +62,14 @@ function Preprocess() {
       await addDoc(collection(db, 'imageRequests'), {
         imageUrls,
         description,
+        materials,
         option: option === 'other' ? customOption : option,
         analysisType, 
       });
 
       setImages([]);
       setDescription('');
+      setMaterials([]);
       setOption('');
       setCustomOption('');
       setAnalysisType('FEA');
@@ -72,7 +84,7 @@ function Preprocess() {
   };
 
   return (
-    <div>
+    <div id='pre' >
       <video id="background-video" src={vid.vid1} controls loop autoPlay muted></video>
       <Grid />
       <Defaultbars />
@@ -142,6 +154,61 @@ function Preprocess() {
               </label>
             </div>
           </div>
+
+          <div className="form-group">
+            <label htmlFor="materials">Select Recommendations for Materials:</label>
+            <div className="checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  value="Metals"
+                  onChange={handleMaterialsChange}
+                />
+                Metals
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Alloys"
+                  onChange={handleMaterialsChange}
+                />
+                Alloys
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Polymers"
+                  onChange={handleMaterialsChange}
+                />
+                Polymers
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Plastics"
+                  onChange={handleMaterialsChange}
+                />
+                Plastics
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Composite"
+                  onChange={handleMaterialsChange}
+                />
+                Composite
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  value="Ceramics"
+                  onChange={handleMaterialsChange}
+                />
+                Ceramics
+              </label>
+            </div>
+          </div>
+
           <div className="form-group">
             <label htmlFor="option">Select A Preferred Analysis Software For Your Project:</label>
             <select id="option" value={option} onChange={(e) => setOption(e.target.value)} required>

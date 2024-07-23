@@ -59,7 +59,7 @@ function Postprocess(){
       }
     };
     return(
-        <div>
+        <div id='err1'>
             <video id="background-video"
                   src={vid.vid1} controls loop autoPlay muted>
            </video>

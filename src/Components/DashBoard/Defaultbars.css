@@ -37,7 +37,7 @@
 
 
 .sidebars{
-    height: 800px;
+    height: 900px;
     width: 220px;
     position: relative;
     background: rgba(255, 255, 255, 0.7); 
@@ -55,8 +55,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -420px;
-    margin-bottom: 150px;
+    top: -1%;
+    left:13%;
+    position: absolute;
 }
 
 .compilogos img{
@@ -73,7 +74,8 @@
   gap: 1px;
   flex-direction: column;
   list-style: none;
-  margin-top: -130px;
+  position: absolute;
+  top: 12%;
 }
 
 .sidebars .dashys .dashlis{

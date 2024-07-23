@@ -1,0 +1,10 @@
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+    #err1 .response-container {
+        margin-left: 0.5em;
+        top: 57em;
+        width: calc(100% - 1em);
+        height: 20em;
+        margin-top: 1em;
+        margin-bottom: 120%;
+    }
+}
