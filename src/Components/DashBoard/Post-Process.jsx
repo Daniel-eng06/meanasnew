@@ -70,70 +70,70 @@ function Postprocess(){
                 <h2>Clarity & Accuracy For Post-Processing</h2>
             </div>
             <div className="errorcheck">
-        <form onSubmit={handleSubmit} className="image-form">
-          <div className="form-group">
-            <label htmlFor="imageUpload">Upload Images/Plots of Your Outcomes for Interpretation:</label>
-            <div className="custom-file-upload">
-              <label htmlFor="imageUpload" id='hov'>
-                <FaUpload size={30} />
-              </label>
-              <input
-                type="file"
-                id="imageUpload"
-                onChange={handleImageChange}
-                multiple
-                style={{ display: 'none' }}
-                required
-              />
-            </div>
-          </div>
-          <div className="uploaded-images">
-            {images.map((image, index) => (
-              <div key={index} className="image-preview">
-                <img src={URL.createObjectURL(image)} alt={`preview-${index}`} />
-                <button type="button" onClick={() => handleDeleteImage(index)}>
-                  <FaTrashAlt />
+              <form onSubmit={handleSubmit} className="image-form">
+                <div className="form-group">
+                  <label htmlFor="imageUpload">Upload Images/Plots of Your Outcomes for Interpretation:</label>
+                  <div className="custom-file-upload">
+                    <label htmlFor="imageUpload" id='hov'>
+                      <FaUpload size={30} />
+                    </label>
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      onChange={handleImageChange}
+                      multiple
+                      style={{ display: 'none' }}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="uploaded-images">
+                  {images.map((image, index) => (
+                    <div key={index} className="image-preview">
+                      <img src={URL.createObjectURL(image)} alt={`preview-${index}`} />
+                      <button type="button" onClick={() => handleDeleteImage(index)}>
+                        <FaTrashAlt />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="analysisType">Select Analysis Type:</label>
+                  <div className="radio-group">
+                    <label>
+                      <input
+                        type="radio"
+                        value="FEA"
+                        checked={analysisType === 'FEA'}
+                        onChange={(e) => setAnalysisType(e.target.value)}
+                      />
+                      FEA
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="CFD"
+                        checked={analysisType === 'CFD'}
+                        onChange={(e) => setAnalysisType(e.target.value)}
+                      />
+                      CFD
+                    </label>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Provide the materials used for your FEA/CFD Analysis: </label>
+                  <textarea
+                    id="description"
+                    value={goal}
+                    onChange={(e) => setGoal(e.target.value)}
+                    placeholder='Please provide all the materials used for your specific FEA/CFD analysis from pre-processing...'
+                    required
+                  />
+                </div>
+                <button type="submit" id='newbut'>
+                  Generate Clarity
                 </button>
-              </div>
-            ))}
-          </div>
-          <div className="form-group">
-            <label htmlFor="analysisType">Select Analysis Type:</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  value="FEA"
-                  checked={analysisType === 'FEA'}
-                  onChange={(e) => setAnalysisType(e.target.value)}
-                />
-                FEA
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="CFD"
-                  checked={analysisType === 'CFD'}
-                  onChange={(e) => setAnalysisType(e.target.value)}
-                />
-                CFD
-              </label>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Provide the materials used for your FEA/CFD Analysis: </label>
-            <textarea
-              id="description"
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              placeholder='Please provide all the materials used for your specific FEA/CFD analysis from pre-processing...'
-              required
-            />
-          </div>
-          <button type="submit" id='newbut'>
-            Generate Clarity
-          </button>
-        </form>
+              </form>
       </div>
       <div className="response-container">
         <div className="response">{response}</div>

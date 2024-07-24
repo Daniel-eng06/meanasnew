@@ -262,7 +262,7 @@
 @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
   .current {
       position: relative;
-      margin-left: 13px;
+      margin-left: 5%;
       height: 4em;
       padding: 1em;
       margin-top: 30%;
@@ -307,7 +307,7 @@
       width: calc(100% - 1em);
       padding: 1em;
       height: auto;
-      margin-bottom: 170%;
+      margin-bottom: 37em;
   }
 
   .custom-file-upload {
@@ -317,7 +317,7 @@
   }
 
   #newbut[type="submit"] {
-      margin-left: 65px;
+      margin-left: 15%;
       width: 70%;
       font-size: 1em;
   }
@@ -326,23 +326,24 @@
       margin-left: 0.5em;
       top: 57em;
       width: calc(100% - 1em);
-      height: 20em;
+      height: 25em;
       margin-top: 10em;
-      margin-bottom: 150%;
+      margin-bottom: 0%;
+      position:absolute
   }
 
   .response {
       width: 100%;
-      height: 18.5em;
+      height: 20em;
   }
 
   .report {
       font-size: 1em;
-      top: 150%;
-      margin-left: 60px;
+      margin-left: 20%;
       width: 60%;
-      position: relative;
-      
+      display: block;
+      position: absolute;
+      top: 88.3em;
   }
 
   .form-group input[type="text"],
