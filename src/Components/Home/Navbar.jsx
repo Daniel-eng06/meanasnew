@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'; 
 import "./Navbar.css";
 import { auth, signOut } from '../../firebase'; 
@@ -13,6 +13,7 @@ function Navbar() {
 
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [isUserDropdownVisible, setIsUserDropdownVisible] = useState(false);
+    const navigate = useNavigate();
 
     const handleDropdownClick = () => {
         setDropdownVisible(!isDropdownVisible);
@@ -22,14 +23,16 @@ function Navbar() {
         setIsUserDropdownVisible(!isUserDropdownVisible);
     };
 
-    const handleLogout = () => {
-        signOut(auth).then(() => {
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
             console.log("User signed out");
-            // Redirect to login page or show a message
-        }).catch((error) => {
+            navigate('/'); 
+        } catch (error) {
             console.error("Error signing out: ", error);
-        });
+        }
     };
+
     return (
         <div className="nav">
             <Link to ="/"  className='logo'>
@@ -49,7 +52,7 @@ function Navbar() {
                         <img id="dass" src={image.user} alt="#" onClick={handleUserDropdownClick} />
                         {isUserDropdownVisible && (
                             <div className="dropdown-menuz">
-                                <Link to="/profile" className="dropdown-itemz">View Profile</Link>
+                                <Link to="/Profile" className="dropdown-itemz">View Profile</Link>
                                 <div className="dropdown-itemz" onClick={handleLogout}>Logout</div>
                             </div>
                         )}

@@ -41,7 +41,7 @@ function Pricing(){
                         <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
                         <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
                     </ul>
-                    <Link className="go" to="/Dashboard">Try For Free</Link>
+                    <Link className="go" to="/FreeAuth">Try For Free</Link>
                 </div>
 
                 <div id="unique">

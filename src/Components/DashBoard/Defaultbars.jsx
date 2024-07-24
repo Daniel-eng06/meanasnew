@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./Defaultbars.css";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { FaBars } from 'react-icons/fa';
 import { auth, signOut } from '../../firebase'; 
 
@@ -17,6 +17,7 @@ function Defaultbars() {
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isUserDropdownVisible, setIsUserDropdownVisible] = useState(false);
+    const navigate = useNavigate();
 
     const handleMenuClick = () => {
         setIsMenuVisible(!isMenuVisible);
@@ -26,13 +27,14 @@ function Defaultbars() {
         setIsUserDropdownVisible(!isUserDropdownVisible);
     };
 
-    const handleLogout = () => {
-        signOut(auth).then(() => {
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
             console.log("User signed out");
-            // Redirect to login page or show a message
-        }).catch((error) => {
+            navigate('/'); 
+        } catch (error) {
             console.error("Error signing out: ", error);
-        });
+        }
     };
 
     return (
@@ -46,7 +48,7 @@ function Defaultbars() {
                         <img id="dass" src={dashimg.user} alt="#" onClick={handleUserDropdownClick} />
                         {isUserDropdownVisible && (
                             <div className="dropdown-menu">
-                                <Link to="/profile" className="dropdown-item">View Profile</Link>
+                                <Link to="/Profile" className="dropdown-item">View Profile</Link>
                                 <div className="dropdown-item" onClick={handleLogout}>Logout</div>
                             </div>
                         )}
@@ -112,7 +114,7 @@ function Defaultbars() {
                             <img id="dass" src={dashimg.user} alt="#" onClick={handleUserDropdownClick} />
                             {isUserDropdownVisible && (
                                 <div className="dropdown-menu">
-                                    <Link to="/profile" className="dropdown-item">View Profile</Link>
+                                    <Link to="/Profile" className="dropdown-item">View Profile</Link>
                                     <div className="dropdown-item" onClick={handleLogout}>Logout</div>
                                 </div>
                             )}
