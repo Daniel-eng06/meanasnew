@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import "./Authentication.css";
 
@@ -9,19 +9,18 @@ const FreeAuth = () => {
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
 
   const handleAuth = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error state
+    setError(""); 
     try {
       if (isSignUp) {
         await createUserWithEmailAndPassword(auth, email, password);
-        navigate("/Dashboard"); // Navigate to pricing page after sign up
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        navigate("/Dashboard"); // Navigate to pricing page after sign in
       }
+      navigate("/Dashboard"); 
     } catch (error) {
       handleError(error);
     }
@@ -53,6 +52,15 @@ const FreeAuth = () => {
     MeanAsLogo: "NobgLogo.png",
     vid1: "Gradient 2.mp4",
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/Dashboard");
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <div className="auth">

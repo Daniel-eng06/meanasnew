@@ -49,7 +49,7 @@ function Defaultbars() {
                         {isUserDropdownVisible && (
                             <div className="dropdown-menu">
                                 <Link to="/Profile" className="dropdown-item">View Profile</Link>
-                                <div className="dropdown-item" onClick={handleLogout}>Logout</div>
+                                <div className="dropdown-item" onClick={handleLogout}>Log out</div>
                             </div>
                         )}
                     </div>
@@ -115,7 +115,7 @@ function Defaultbars() {
                             {isUserDropdownVisible && (
                                 <div className="dropdown-menu">
                                     <Link to="/Profile" className="dropdown-item">View Profile</Link>
-                                    <div className="dropdown-item" onClick={handleLogout}>Logout</div>
+                                    <div className="dropdown-item" onClick={handleLogout}>Log out</div>
                                 </div>
                             )}
                         </div>

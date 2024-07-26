@@ -52,7 +52,7 @@ function SideBar() {
                         {isUserDropdownVisible && (
                             <div className="dropdown-menus">
                                 <Link to="/Profile" className="dropdown-items">View Profile</Link>
-                                <div className="dropdown-items" onClick={handleLogout}>Logout</div>
+                                <div className="dropdown-items" onClick={handleLogout}>Log out</div>
                             </div>
                         )}
                     </div>
@@ -119,7 +119,7 @@ function SideBar() {
                             {isUserDropdownVisible && (
                                 <div className="dropdown-menus">
                                     <Link to="/Profile" className="dropdown-items">View Profile</Link>
-                                    <div className="dropdown-items" onClick={handleLogout}>Logout</div>
+                                    <div className="dropdown-items" onClick={handleLogout}>Log out</div>
                                 </div>
                             )}
                         </div>
