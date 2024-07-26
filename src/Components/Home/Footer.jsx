@@ -8,8 +8,8 @@ function Footer() {
       <div className="footer-content">
         <nav className="footer-nav">
           <Link to="/About">About</Link>
-          <Link to="#">Features</Link>
-          <Link to="/FreeAuth">Dashboard</Link>
+          <Link to="/Features">Features</Link>
+          <Link to="/Authentication">Dashboard</Link>
           <Link to="/Pricing">Pricing</Link>
           <Link to="#">MeanAs Help Center</Link>
         </nav>

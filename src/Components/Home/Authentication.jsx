@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Authentication.css";
 
 const Authentication = () => {
@@ -9,20 +9,25 @@ const Authentication = () => {
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
+  const location = useLocation(); // to get the current location
 
   const handleAuth = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error state
+    setError(""); 
     try {
       if (isSignUp) {
+        console.log("Signing up user");
         await createUserWithEmailAndPassword(auth, email, password);
-        navigate("/Pricing"); // Navigate to pricing page after sign up
       } else {
+        console.log("Signing in user");
         await signInWithEmailAndPassword(auth, email, password);
-        navigate("/Pricing"); // Navigate to pricing page after sign in
       }
+      // Redirect to Dashboard after authentication
+      console.log("Authentication successful, redirecting to Dashboard");
+      navigate("/Dashboard", { state: { plan: location.state?.plan } });
     } catch (error) {
+      console.error("Authentication error: ", error);
       handleError(error);
     }
   };
@@ -48,6 +53,17 @@ const Authentication = () => {
         setError("An unexpected error occurred. Please try again later.");
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is logged in, redirecting to Dashboard");
+        navigate("/Dashboard", { state: { plan: location.state?.plan } });
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate, location.state]);
+
 
   const image = {
     MeanAsLogo: "NobgLogo.png",

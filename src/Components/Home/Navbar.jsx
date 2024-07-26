@@ -47,11 +47,11 @@ function Navbar() {
             <ul className="menu">
                 <li><Link id="l1" to="/About">About</Link></li>
                 <li><Link id="l1" to="/Features">Features</Link></li>
-                <li><Link to="/Dashboard" id="l1">Dashboard</Link></li>
+                <li><Link to="/Authentication" id="l1">Dashboard</Link></li>
             </ul>
             {!user && (
                 <ul className="try">
-                    <li><Link id="try" to="/FreeAuth">Try For Free</Link></li>
+                    <li><Link id="try" to="/Authentication">Try For Free</Link></li>
                 </ul>
             )}
             {user && (
@@ -78,7 +78,7 @@ function Navbar() {
                         <li><Link id="l1" to="/About">About</Link></li>
                         <li><Link id="l1" to="/Features">Features</Link></li>
                         <li><Link to="/Dashboard" id="l1">Dashboard</Link></li>
-                        <li><Link id="try" to="/FreeAuth">Try For Free</Link></li>
+                        <li><Link id="try" to="/Authentication">Try For Free</Link></li>
                     </ul>
                 )}
             </ul>

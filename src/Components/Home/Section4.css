@@ -226,4 +226,8 @@
         padding: 8px 20px; /* Smaller button padding */
         font-size: 15px; /* Smaller font size */
     }
+
+    #unique #popu{
+        margin-top: -40px;
+    }
 }

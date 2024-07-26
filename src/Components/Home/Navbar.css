@@ -78,9 +78,9 @@
 }
 
 .nav #besides{
-    display: none;
-    position:absolute;
-    margin-right:-70em;
+    display: flex;
+    position:relative;
+    margin-right:15%;
 }
 
 .nav #besides .allicons{
@@ -115,10 +115,6 @@
 }
 
 
-
-
-
-
 @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
     .nav {
         flex-direction: row;
@@ -129,7 +125,7 @@
     }
 
     .logo {
-        margin-top: 15px;
+        margin-top: 12px;
         margin-left: -30px;
         width: 150px;
         height: 100px;
@@ -144,6 +140,7 @@
         display: flex;
         flex-direction: column;
         margin-right: -25px;
+        
     }
 
     .dropdown li{
@@ -195,6 +192,32 @@
     #try:hover{
         background-color: silver;
         transition-property: background-color ease 0.5s;
+    }
+
+    .nav #besides{
+        display: flex;
+        position:absolute;
+        top:40%;
+        right:12%;
+    }
+    
+    .nav #besides .allicons{
+        width:40px;
+        height:40px;
+    }
+    .dropdown-menuz {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        background-color: #f0f0f0;
+        top: 45px;
+        max-width: 50em;
+        z-index: 1000;
+    }
+
+    .dropdown-itemz {
+        font-weight: 0;
     }
 
 }

@@ -326,10 +326,10 @@
         flex-direction: column;
         position: absolute;
         background-color: #f0f0f0;
-        top: 48px;
+        top: 43px;
         max-width: 50em;
         z-index: 1000;
-        right:-0.5em;
+        right:-0.8em;
     }
   }
   

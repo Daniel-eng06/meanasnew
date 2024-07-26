@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import "./SideBar.css"
-import { Link, useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import "./SideBar.css";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { auth, signOut, db } from '../../firebase';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { updateDoc, doc } from "firebase/firestore";
 import { FaBars } from 'react-icons/fa';
-import { auth, signOut } from '../../firebase';
 
 function SideBar() {
     const dashimg = {
@@ -119,7 +121,7 @@ function SideBar() {
                             {isUserDropdownVisible && (
                                 <div className="dropdown-menus">
                                     <Link to="/Profile" className="dropdown-items">View Profile</Link>
-                                    <div className="dropdown-items" onClick={handleLogout}>Log out</div>
+                                    <div className="dropdown-items" onClick={handleLogout}>Logout</div>
                                 </div>
                             )}
                         </div>
