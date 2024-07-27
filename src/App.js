@@ -11,7 +11,8 @@ import FreeAuth from './Components/Home/FreeAuth.jsx';
 import Pricing from './Components/Home/Pricing.jsx';
 import About from './Components/Home/About.jsx';
 import Features from "./Components/Home/Features.jsx";
-import Profile from "./Components/DashBoard/Profile.jsx"
+import Profile from "./Components/DashBoard/Profile.jsx";
+import Projects from './Components/DashBoard/Projects.jsx';
 
 
 
@@ -30,6 +31,7 @@ function MeanAsApp() {
                       <Route index path="/About" element={<About/>}/>
                       <Route index path="/Features" element={<Features/>}/>
                       <Route index path="/Profile" element={<Profile/>}/>
+                      <Route path="/Projects/:id" element={<Projects/>} />
                     </Routes>
                 </Router>
            </div>)

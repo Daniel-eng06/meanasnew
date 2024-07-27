@@ -7,6 +7,7 @@ import { storage, db } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function Preprocess() {
   const vid = {
@@ -22,6 +23,8 @@ function Preprocess() {
   const [materials, setMaterials] = useState([]); // State to store selected materials
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(''); // State to store ChatGPT response
+
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -46,6 +49,7 @@ function Preprocess() {
     // Replace this with actual API call if needed
     const simulatedResponse = 'This is a simulated response from MeanAs.';
     setResponse(simulatedResponse);
+    return simulatedResponse; // Return the response to store in Firestore
   };
 
   const handleSubmit = async (e) => {
@@ -53,30 +57,45 @@ function Preprocess() {
     setLoading(true);
 
     if (images.length > 0) {
-      const imageUrls = await Promise.all(images.map(async (image) => {
-        const storageRef = ref(storage, `images/${image.name}`);
-        await uploadBytes(storageRef, image);
-        return getDownloadURL(storageRef);
-      }));
+      try {
+        // Upload images to Firebase Storage
+        const imageUrls = await Promise.all(images.map(async (image) => {
+          const storageRef = ref(storage, `images/${image.name}`);
+          await uploadBytes(storageRef, image);
+          return getDownloadURL(storageRef);
+        }));
 
-      await addDoc(collection(db, 'imageRequests'), {
-        imageUrls,
-        description,
-        materials,
-        option: option === 'other' ? customOption : option,
-        analysisType, 
-      });
+        // Fetch ChatGPT response
+        const generatedResponse = await fetchChatGPTResponse();
 
-      setImages([]);
-      setDescription('');
-      setMaterials([]);
-      setOption('');
-      setCustomOption('');
-      setAnalysisType('FEA');
-      setLoading(false);
+        // Store project details and generated response in Firestore
+        const docRef = await addDoc(collection(db, 'projects'), {
+          imageUrls,
+          description,
+          materials,
+          option: option === 'other' ? customOption : option,
+          analysisType, 
+          responses: [generatedResponse], // Store responses as an array
+          createdAt: new Date(),
+        });
 
-      alert('Images uploaded successfully!');
-      fetchChatGPTResponse(); // Fetch the ChatGPT response after successful upload
+        setImages([]);
+        setDescription('');
+        setMaterials([]);
+        setOption('');
+        setCustomOption('');
+        setAnalysisType('');
+        setLoading(false);
+
+        alert('Images uploaded successfully!');
+        // Redirect to the project page with the newly created project ID
+        navigate(`/Projects/${docRef.id}`);
+
+      } catch (error) {
+        setLoading(false);
+        console.error('Error uploading images and saving project:', error);
+        alert('Failed to upload images and save project. Please try again.');
+      }
     } else {
       setLoading(false);
       alert('Please select images to upload.');
@@ -84,7 +103,7 @@ function Preprocess() {
   };
 
   return (
-    <div id='pre' >
+    <div id='pre'>
       <video id="background-video" src={vid.vid1} controls loop autoPlay muted></video>
       <Grid />
       <Defaultbars />
