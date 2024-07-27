@@ -51,7 +51,7 @@ function Navbar() {
             </ul>
             {!user && (
                 <ul className="try">
-                    <li><Link id="try" to="/Authentication">Try For Free</Link></li>
+                    <li><Link id="try" to="/Authentication" state={{ plan: "Explorer Plan" }}>Try For Free</Link></li>
                 </ul>
             )}
             {user && (
@@ -77,8 +77,8 @@ function Navbar() {
                     <ul className='dropdown-list'>
                         <li><Link id="l1" to="/About">About</Link></li>
                         <li><Link id="l1" to="/Features">Features</Link></li>
-                        <li><Link to="/Dashboard" id="l1">Dashboard</Link></li>
-                        <li><Link id="try" to="/Authentication">Try For Free</Link></li>
+                        <li><Link to="/Authentication" id="l1">Dashboard</Link></li>
+                        <li><Link id="try" to="/Authentication" state={{ plan: "Explorer Plan" }}>Try For Free</Link></li>
                     </ul>
                 )}
             </ul>

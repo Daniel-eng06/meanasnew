@@ -18,7 +18,7 @@ function Benefits() {
             ))}
             </div>
             <ul className="callbar">
-                <li><Link to="/Authentication" id="call3">Try For Free</Link></li>
+                <li><Link to="/Authentication" state={{ plan: "Explorer Plan" }} id="call3">Try For Free</Link></li>
                 <li><Link to="/Pricing" id="call1">Access Clarity Now</Link></li>
             </ul>
         </div>
