@@ -14,7 +14,7 @@
         margin-left: 0.5em;
         width: calc(100% - 1em);
         height: 24.5em;
-        margin-top: 70%;
+        margin-top: 60%;
         margin-bottom: 0%;
     }
     #err1 .report {
@@ -22,7 +22,7 @@
         margin-left: 20%;
         width: 60%;
         position: absolute;
-        top: 90em;
+        top: 88.5em;
     }
 
     #err1 .checkbox-group label {

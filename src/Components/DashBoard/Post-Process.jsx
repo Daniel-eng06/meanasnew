@@ -143,16 +143,16 @@ function Postprocess(){
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="detailLevel">What level of detail do you require in the explanation?</label>
+                        <label htmlFor="detailLevel">What level of details do you require in the explanation?</label>
                         <div className="checkbox-group">
                             <label>
                                 <input
                                     type="checkbox"
-                                    value="High-level insight"
+                                    value="High Student-level insight"
                                     checked={detailLevel.includes('High-level insight')}
                                     onChange={handleDetailLevelChange}
                                 />
-                                High-level
+                                High Student Level
                             </label>
                             <label>
                                 <input
@@ -161,7 +161,7 @@ function Postprocess(){
                                     checked={detailLevel.includes('Detailed technical insight')}
                                     onChange={handleDetailLevelChange}
                                 />
-                                Detailed technical insight
+                                Detailed Technical Insight
                             </label>
                             <label>
                                 <input
@@ -170,7 +170,7 @@ function Postprocess(){
                                     checked={detailLevel.includes('Marketing-level insight')}
                                     onChange={handleDetailLevelChange}
                                 />
-                                Marketing-level
+                                Marketing Level
                             </label>
                             <label>
                                 <input
@@ -179,7 +179,7 @@ function Postprocess(){
                                     checked={detailLevel.includes('Research-level insight')}
                                     onChange={handleDetailLevelChange}
                                 />
-                                Research-level 
+                                Research Level 
                             </label>
                         </div>
                     </div>

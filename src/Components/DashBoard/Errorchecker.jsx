@@ -16,6 +16,8 @@ function Errorchecker() {
 
   const [images, setImages] = useState([]);
   const [goal, setGoal] = useState('');
+  const [option, setOption] = useState('');
+  const [customOption, setCustomOption] = useState('');
   const [response, setResponse] = useState('');
 
   const handleImageChange = (e) => {
@@ -30,7 +32,7 @@ function Errorchecker() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (images.length > 0 && goal) {
+    if (images.length > 0 && goal && option) {
       try {
         const imageUrls = await Promise.all(images.map(async (image) => {
           const storageRef = ref(storage, `errors/${image.name}`);
@@ -41,17 +43,20 @@ function Errorchecker() {
         await addDoc(collection(db, 'errorGoals'), {
           goal,
           imageUrls,
+          software: option === 'other' ? customOption : option,
           timestamp: new Date(),
         });
 
         setImages([]);
         setGoal('');
-        alert('Images uploaded successfully!');
+        setOption('');
+        setCustomOption('');
+        setResponse('Images uploaded successfully!');
       } catch (error) {
         console.error("Error uploading file or sending data", error);
       }
     } else {
-      alert('Please upload images and enter your goal.');
+      alert('Please upload images, enter your goal, and select the analysis software.');
     }
   };
 
@@ -102,6 +107,31 @@ function Errorchecker() {
               required
             />
           </div>
+
+          <div className="form-group">
+            <label htmlFor="option">Select The Specific Analysis Software:</label>
+            <select id="option" value={option} onChange={(e) => setOption(e.target.value)} required>
+              <option value="">Select an analysis software</option>
+              <option value="ansys">Ansys</option>
+              <option value="abaqus">Abaqus</option>
+              <option value="comsol">Comsol</option>
+              <option value="solidworks">Solidworks</option>
+              <option value="openfoam">OpenFoam</option>
+              <option value="fusion360">Fusion 360</option>
+              <option value="other">Other</option>
+            </select>
+            {option === 'other' && (
+              <input
+                type='text'
+                id="texti"
+                value={customOption}
+                onChange={(e) => setCustomOption(e.target.value)}
+                placeholder='Type your custom option...'
+                required
+              />
+            )}
+          </div>
+
           <button type="submit" id='newbut'>
             Generate Clarity
           </button>

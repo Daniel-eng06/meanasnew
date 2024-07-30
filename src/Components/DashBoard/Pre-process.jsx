@@ -3,11 +3,11 @@ import './Pre-process.css';
 import Footer from '../Home/Footer';
 import Grid from '../../Grid';
 import Defaultbars from './Defaultbars';
-import { storage, db } from '../../firebase'; 
+import { storage } from '../../firebase'; 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Preprocess() {
   const vid = {
@@ -44,14 +44,6 @@ function Preprocess() {
     }
   };
 
-  const fetchChatGPTResponse = async () => {
-    // Simulate a call to ChatGPT API and set the response
-    // Replace this with actual API call if needed
-    const simulatedResponse = 'This is a simulated response from MeanAs.';
-    setResponse(simulatedResponse);
-    return simulatedResponse; // Return the response to store in Firestore
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -65,19 +57,17 @@ function Preprocess() {
           return getDownloadURL(storageRef);
         }));
 
-        // Fetch ChatGPT response
-        const generatedResponse = await fetchChatGPTResponse();
-
-        // Store project details and generated response in Firestore
-        const docRef = await addDoc(collection(db, 'projects'), {
-          imageUrls,
+        // Send data to the backend server
+        const response = await axios.post('/process', {
           description,
+          imageUrls,
           materials,
-          option: option === 'other' ? customOption : option,
-          analysisType, 
-          responses: [generatedResponse], // Store responses as an array
-          createdAt: new Date(),
+          option,
+          customOption,
+          analysisType,
         });
+
+        const { id, response: generatedResponse } = response.data;
 
         setImages([]);
         setDescription('');
@@ -87,9 +77,11 @@ function Preprocess() {
         setAnalysisType('');
         setLoading(false);
 
-        alert('Images uploaded successfully!');
+        setResponse(generatedResponse);
+
+        alert('Images uploaded and processed successfully!');
         // Redirect to the project page with the newly created project ID
-        navigate(`/Projects/${docRef.id}`);
+        navigate(`/Projects/${id}`);
 
       } catch (error) {
         setLoading(false);
@@ -180,7 +172,7 @@ function Preprocess() {
               <label>
                 <input
                   type="checkbox"
-                  value="Metals"
+                  value="Metals/Alloys"
                   onChange={handleMaterialsChange}
                 />
                 Metals
@@ -188,10 +180,10 @@ function Preprocess() {
               <label>
                 <input
                   type="checkbox"
-                  value="Alloys"
+                  value="Liquids"
                   onChange={handleMaterialsChange}
                 />
-                Alloys
+                Liquids
               </label>
               <label>
                 <input
@@ -256,14 +248,12 @@ function Preprocess() {
           </button>
         </form>
       </div>
-      {/* {response && ( */}
-        <div className="response-container">
-          <div className="response">{response}</div>
-        </div>
-        <button className='report'>
-            Generate Report
-        </button>
-      {/* )} */}
+      <div className="response-container">
+        <div className="response">{response}</div>
+      </div>
+      <button className='report'>
+          Generate Report
+      </button>
       <Footer />
     </div>
   );

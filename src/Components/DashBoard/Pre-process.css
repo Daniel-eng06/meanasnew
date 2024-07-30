@@ -28,6 +28,15 @@
   object-fit: cover;
 }
 
+#color{
+  background-color: #000925;
+  width: 25px;
+  height: 25px;
+}
+#color:hover{
+  background-color: royalblue;
+}
+
 .preprocess {
   position: absolute;
   display: flex;
@@ -382,7 +391,7 @@
 
   .radio-group {
       margin-top: 0.5em;
-      flex-direction: column;
+      flex-direction: row;
   }
 
   .radio-group label {
