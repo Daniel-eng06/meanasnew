@@ -1,21 +1,21 @@
 // server.js
 require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const axios = require('axios');
-const admin = require('firebase-admin');
-const serviceAccount = require('./path/to/your/firebase-service-account-file.json');
+import express from 'express';
+import { json } from 'body-parser';
+import { post } from 'axios';
+import { initializeApp, credential as _credential, firestore, storage } from 'firebase-admin';
+import serviceAccount from './path/to/your/firebase-service-account-file.json';
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+initializeApp({
+  credential: _credential.cert(serviceAccount),
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 });
 
-const db = admin.firestore();
-const bucket = admin.storage().bucket();
+const db = firestore();
+const bucket = storage().bucket();
 
 const app = express();
-app.use(bodyParser.json());
+app.use(json());
 
 app.post('/process', async (req, res) => {
   const { description, imageUrls, materials, option, customOption, analysisType } = req.body;
@@ -43,7 +43,7 @@ app.post('/process', async (req, res) => {
             Image URLs: ${imageUrls.join(', ')}`;
     }
 
-    const response = await axios.post(
+    const response = await post(
       'https://api.openai.com/v1/gemini', // Replace with actual Gemini Vision API endpoint
       {
         prompt,

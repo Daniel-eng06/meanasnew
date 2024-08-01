@@ -1,8 +1,16 @@
 import React from 'react';
 import "./Section1.css"
 import {Link} from "react-router-dom";
+import { analytics } from '../../firebase';
+import { logEvent } from "firebase/analytics";
+
 
 function Salescopy() {
+    const handleLinkClick = (linkName) => {
+        // Log the click event with a specific link name
+        logEvent(analytics, 'link_click', { link_name: linkName });
+      };
+
     const softwareimg = {
         img1:"Ansys.png",
         img2:"Abaqus.png",
@@ -16,7 +24,7 @@ function Salescopy() {
         <div className='section1'>
             <div className="heading">
                 <h1>Access Fast Clarity & Accuracy
-                    Before and After Your FEA/CFD Analysis in Two Steps
+                    Before and After Your FEA/CFD Analysis in <span id='tw'>Two Steps</span>
                 </h1>
                 <p>
                    An AI-Powered platform providing the clarity you need before and after your FEA/CFD analysis projects.
@@ -25,8 +33,8 @@ function Salescopy() {
                 </p>
             </div>
             <ul className="call">
-                <li><Link id="call2" to="/Authentication">Try For Free</Link></li>
-                <li><Link id="call1" to="/Pricing">Access Clarity Now</Link></li>
+                <li><Link id="call2" to="/Authentication" onClick={() => handleLinkClick('Try For Free')}>Try For Free</Link></li>
+                <li><Link id="call1" to="/Pricing" onClick={() => handleLinkClick('Access Clarity Now')}>Access Clarity Now</Link></li>
             </ul>
             <div className="software">
                 <p>Trusted to Assist and Interpret Videos, Images and Data from</p>

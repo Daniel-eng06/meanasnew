@@ -65,6 +65,7 @@ function Preprocess() {
           option,
           customOption,
           analysisType,
+          timestamp: new Date(),
         });
 
         const { id, response: generatedResponse } = response.data;

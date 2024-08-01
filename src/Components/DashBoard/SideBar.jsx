@@ -115,7 +115,7 @@ function SideBar() {
         <ul className="dashy">
           <Link className="dashli" to="/Dashboard"><div className="dash"><img id="das" src={dashimg.over} /></div>Overview</Link>
           <Link className="dashli" to="/Projects/:id"><div className="dash"><img id="das" src={dashimg.proj} /></div>Projects</Link>
-          <Link className="dashli" to="#"><div className="dash"><img id="das" src={dashimg.team} /></div>Team Connect</Link>
+          <Link className="dashli" to="/TeamConnect"><div className="dash"><img id="das" src={dashimg.team} /></div>Team Connect</Link>
           <Link className="dashli" to="#"><div className="dash"><img id="das" src={dashimg.assis} /></div>AI Assistant</Link>
         </ul>
         <Link id="upgra" to='/Pricing'>
@@ -140,7 +140,7 @@ function SideBar() {
             <ul className='dropdown-lists'>
               <li><Link className="dashlis" to="/Dashboard"><div className="dashs"><img id="dass" src={dashimg.over} alt="Overview" /></div>Overview</Link></li>
               <li><Link className="dashlis" to="/Projects/:id"><div className="dashs"><img id="dass" src={dashimg.proj} alt="Projects" /></div>Projects</Link></li>
-              <li><Link className="dashlis" to="#"><div className="dashs"><img id="dass" src={dashimg.team} alt="Team Connect" /></div>Team Connect</Link></li>
+              <li><Link className="dashlis" to="/TeamConnect"><div className="dashs"><img id="dass" src={dashimg.team} alt="Team Connect" /></div>Team Connect</Link></li>
               <li><Link className="dashlis" to="#"><div className="dashs"><img id="dass" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link></li>
               <li>
                 <Link id="upgrap" to="/Pricing">

@@ -1,9 +1,9 @@
 
 * {
-    font-family: Roboto, sans-serif;
+    font-family: Roboto;
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    max-width: 1600px;
+    max-width: 1200px, 1600px;
 }

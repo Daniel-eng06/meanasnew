@@ -4,6 +4,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Authentication.css";
+import { analytics } from '../../firebase';
+import { logEvent } from "firebase/analytics";
 
 const Authentication = () => {
   const [email, setEmail] = useState("");
@@ -72,6 +74,11 @@ const Authentication = () => {
     vid1: "Gradient 2.mp4",
   };
 
+  const handleLinkClick = (linkAuth) => {
+    // Log the click event with a specific link name
+    logEvent(analytics, 'link_click', { link_auth: linkAuth });
+  };
+
   return (
     <div className="auth">
       <video id="background-video" src={image.vid1} controls loop autoPlay muted />
@@ -96,10 +103,10 @@ const Authentication = () => {
           placeholder="#MeanAs.ai"
           required
         />
-        <button type="submit">{isSignUp ? "Signup with Email" : "Signin with Email"}</button>
+        <button type="submit" onClick={() => handleLinkClick(isSignUp ? "Signup with Email" : "Signin with Email")}>{isSignUp ? "Signup with Email" : "Signin with Email"}</button>
       </form>
       <p id="or">OR</p>
-      <button onClick={() => setIsSignUp(!isSignUp)}>
+      <button onClick={() => setIsSignUp(!isSignUp)} >
         {isSignUp ? "Signin with Email" : "Signup with Email"}
       </button>
     </div>

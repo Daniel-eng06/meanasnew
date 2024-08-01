@@ -1,0 +1,14 @@
+.teamhub{
+    margin-left: 30em;
+    position: absolute;
+    top: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    height:auto;
+    flex-direction: column;
+    
+}
+
+

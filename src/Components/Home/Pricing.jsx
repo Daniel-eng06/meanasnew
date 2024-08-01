@@ -3,8 +3,14 @@ import "./Pricing.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
+import { analytics } from '../../firebase';
+import { logEvent } from "firebase/analytics";
 
 function Pricing() {
+  const handleLinkClick = (linkPrices) => {
+    // Log the click event with a specific link name
+    logEvent(analytics, 'link_click', { link_prices: linkPrices });
+  };
   const image = {
     vid1: "Gradient 2.mp4",
   };
@@ -40,7 +46,7 @@ function Pricing() {
               <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
               <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
             </ul>
-            <Link className="go" to="/Authentication" state={{ plan: "Explorer Plan" }}>Try For Free</Link>
+            <Link className="go" to="/Authentication" state={{ plan: "Explorer Plan" }} onClick={() => handleLinkClick('Try For Free')}>Try For Free</Link>
           </div>
 
           <div id="unique">
@@ -59,7 +65,7 @@ function Pricing() {
               <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
               <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
             </ul>
-            <Link className="go1" to="/Authentication" state={{ plan: "Standard Plan" }}>Get Started</Link>
+            <Link className="go1" to="/Authentication" state={{ plan: "Standard Plan" }} onClick={() => handleLinkClick('Get Started')}>Get Started</Link>
           </div>
 
           <div id='pro'>
@@ -77,7 +83,7 @@ function Pricing() {
               <li id="pri"><div><img src={img.spot3} alt=""/></div>Clarity & Accuracy For Post-Processing</li>
               <li id="pri"><div><img src={img.spot3} alt=""/></div>FEA/CFD Analysis Error Solutions</li>
             </ul>
-            <Link className="go" to="/Authentication" state={{ plan: "Unlimited Plan" }}>Go Unlimited</Link>
+            <Link className="go" to="/Authentication" state={{ plan: "Unlimited Plan" }} onClick={() => handleLinkClick('Go Unlimited')}>Go Unlimited</Link>
           </div>
         </div>
       </div>

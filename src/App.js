@@ -13,6 +13,7 @@ import About from './Components/Home/About.jsx';
 import Features from "./Components/Home/Features.jsx";
 import Profile from "./Components/DashBoard/Profile.jsx";
 import Projects from './Components/DashBoard/Projects.jsx';
+import TeamConnect from './Components/DashBoard/TeamConnect.jsx';
 
 
 
@@ -32,6 +33,7 @@ function MeanAsApp() {
                       <Route index path="/Features" element={<Features/>}/>
                       <Route index path="/Profile" element={<Profile/>}/>
                       <Route path="/Projects/:id" element={<Projects/>} />
+                      <Route index path="/TeamConnect" element={<TeamConnect/>}/>
                     </Routes>
                 </Router>
            </div>)

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import Navbar from "../Home/Navbar.jsx";
 import Footer from "../Home/Footer";
+import Defaultbars from './Defaultbars';
 import './Projects.css'; 
 
 function Projects() {
@@ -37,7 +37,7 @@ function Projects() {
             <video id="background-video"
                    src={vido.vid1} controls loop autoPlay muted>
             </video>
-            <Navbar/>
+            <Defaultbars />
             <div className="project-page">
                 <h2>Project Details</h2>
                 <p>Description: {project.description}</p>
