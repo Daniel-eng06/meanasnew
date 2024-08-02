@@ -7,6 +7,7 @@ import { storage, db } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
+import { jsPDF } from 'jspdf';
 
 function Postprocess(){
     const vid ={
@@ -61,13 +62,47 @@ function Postprocess(){
                 setGoal('');
                 setAnalysisType('');
                 setDetailLevel([]);
-                alert('Images uploaded successfully!');
+                setResponse('Images uploaded successfully!');
             } catch (error) {
                 console.error("Error uploading file or sending data", error);
             }
         } else {
             alert('Please upload images, enter your goal, select an analysis type, and choose the level of detail.');
         }
+    };
+
+    const generatePDF = async () => {
+        const doc = new jsPDF();
+        doc.text("Post-Process Report", 10, 10);
+        doc.text(`Goal: ${goal}`, 10, 20);
+        doc.text(`Analysis Type: ${analysisType}`, 10, 30);
+        doc.text(`Detail Level: ${detailLevel.join(", ")}`, 10, 40);
+
+        // Adding response to the PDF
+        const responseLines = response.split('\n');
+        let yOffset = 50;
+        responseLines.forEach(line => {
+            doc.text(line, 10, yOffset);
+            yOffset += 10;
+        });
+
+        const pdfBlob = doc.output("blob");
+
+        // Upload PDF to Firebase Storage
+        const pdfRef = ref(storage, `reports/report_${new Date().getTime()}.pdf`);
+        await uploadBytes(pdfRef, pdfBlob);
+        const pdfURL = await getDownloadURL(pdfRef);
+
+        // Automatically download the PDF
+        const pdfBlobURL = URL.createObjectURL(pdfBlob);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pdfBlobURL;
+        downloadLink.download = "report.pdf";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        alert(`Report generated and uploaded successfully! URL: ${pdfURL}`);
     };
 
     return (
@@ -103,7 +138,7 @@ function Postprocess(){
                         {images.map((image, index) => (
                             <div key={index} className="image-preview">
                                 <img src={URL.createObjectURL(image)} alt={`preview-${index}`} />
-                                <button type="button" onClick={() => handleDeleteImage(index)}>
+                                <button type="button" onClick={() => handleDeleteImage(index)} id='buts'>
                                     <FaTrashAlt />
                                 </button>
                             </div>
@@ -149,7 +184,7 @@ function Postprocess(){
                                 <input
                                     type="checkbox"
                                     value="High Student-level insight"
-                                    checked={detailLevel.includes('High-level insight')}
+                                    checked={detailLevel.includes('High Student-level insight')}
                                     onChange={handleDetailLevelChange}
                                 />
                                 High Student Level
@@ -189,11 +224,13 @@ function Postprocess(){
                 </form>
             </div>
             <div className="response-container">
-                <div className="response">{response}</div>
-            </div>
-            <button className='report'>
+                <div className="response">
+                {response || 'No response yet. Click "Generate Clarity" '}
+                </div>
+                <button className='report' onClick={generatePDF}>
                 Generate Report
-            </button>
+                </button>
+            </div>
             <Footer />
         </div>
     );

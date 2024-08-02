@@ -7,6 +7,7 @@ import { storage, db } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
+import { jsPDF } from 'jspdf';
 
 function Errorchecker() {
   const vid = {
@@ -58,6 +59,41 @@ function Errorchecker() {
     } else {
       alert('Please upload images, enter your goal, and select the analysis software.');
     }
+  };
+
+  const generatePDF = async () => {
+    const doc = new jsPDF();
+    doc.text("Project Report", 10, 10);
+    doc.text(`Description: ${goal}`, 10, 20);
+    doc.text(`Materials: ${images.map(img => img.name).join(", ")}`, 10, 30);
+    doc.text(`Analysis Type: ${option === 'other' ? customOption : option}`, 10, 40);
+    
+    // Adding response to the PDF
+    const responseLines = response.split('\n');
+    let yOffset = 50;
+    responseLines.forEach(line => {
+      doc.text(line, 10, yOffset);
+      yOffset += 10;
+    });
+
+    // Output PDF as a Blob
+    const pdfBlob = doc.output("blob");
+
+    // Upload PDF to Firebase Storage
+    const pdfRef = ref(storage, `reports/report_${new Date().getTime()}.pdf`);
+    await uploadBytes(pdfRef, pdfBlob);
+    const pdfURL = await getDownloadURL(pdfRef);
+
+    // Automatically download the PDF
+    const pdfBlobURL = URL.createObjectURL(pdfBlob);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = pdfBlobURL;
+    downloadLink.download = "report.pdf";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    alert(`Report generated and uploaded successfully! URL: ${pdfURL}`);
   };
 
   return (
@@ -138,11 +174,13 @@ function Errorchecker() {
         </form>
       </div>
       <div className="response-container">
-        <div className="response">{response}</div>
+        <div className="response">
+          {response || 'No response yet. Click "Generate Clarity" '}
+        </div>
+        <button className='report' onClick={generatePDF}>
+          Generate Report
+        </button>
       </div>
-      <button className='report'>
-        Generate Report
-      </button>
       <Footer />
     </div>
   );

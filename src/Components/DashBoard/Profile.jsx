@@ -3,7 +3,7 @@ import { auth, signOut } from "../../firebase";
 import { updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Home/Footer";
-import Defaultbars from './Defaultbars';
+import Navbar from "../Home/Navbar.jsx";
 import "./Profile.css";
 
 const Profile = () => {
@@ -88,7 +88,7 @@ const Profile = () => {
         <video id="background-video"
                    src={vid.vid1} controls loop autoPlay muted>
         </video>
-        <Defaultbars />
+        <Navbar/>
         <div className="profile">
         <h1>Profile</h1>
         {error && <p style={{ color: "red" }}>{error}</p>}

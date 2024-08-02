@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { jsPDF } from 'jspdf';
 
 function Preprocess() {
   const vid = {
@@ -95,6 +96,42 @@ function Preprocess() {
     }
   };
 
+  const generatePDF = async () => {
+    const doc = new jsPDF();
+    doc.text("Project Report", 10, 10);
+    doc.text(`Description: ${description}`, 10, 20);
+    doc.text(`Materials: ${materials.join(", ")}`, 10, 30);
+    doc.text(`Analysis Type: ${analysisType}`, 10, 40);
+    doc.text(`Preferred Software: ${option} ${customOption}`, 10, 50);
+    
+    // Adding AI response to the PDF
+    const responseLines = response.split('\n');
+    let yOffset = 60;
+    responseLines.forEach(line => {
+      doc.text(line, 10, yOffset);
+      yOffset += 10;
+    });
+  
+    // Output PDF as a Blob
+    const pdfBlob = doc.output("blob");
+  
+    // Upload PDF to Firebase Storage
+    const pdfRef = ref(storage, `reports/report_${new Date().getTime()}.pdf`);
+    await uploadBytes(pdfRef, pdfBlob);
+    const pdfURL = await getDownloadURL(pdfRef);
+  
+    // Automatically download the PDF
+    const pdfBlobURL = URL.createObjectURL(pdfBlob);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = pdfBlobURL;
+    downloadLink.download = "report.pdf";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  
+    alert(`Report generated and uploaded successfully! URL: ${pdfURL}`);
+  };
+  
   return (
     <div id='pre'>
       <video id="background-video" src={vid.vid1} controls loop autoPlay muted></video>
@@ -250,11 +287,13 @@ function Preprocess() {
         </form>
       </div>
       <div className="response-container">
-        <div className="response">{response}</div>
-      </div>
-      <button className='report'>
+        <div className="response">
+          {response || 'No response yet. Click "Generate Clarity" '}
+        </div>
+        <button className='report' onClick={generatePDF}>
           Generate Report
-      </button>
+        </button>
+      </div>
       <Footer />
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { storage, db } from '../../firebase'; // Ensure firebase is correctly initialized
+import { auth, db } from '../../firebase'; // Ensure firebase is correctly initialized
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import Grid from '../../Grid';
 import Footer from '../Home/Footer';
 import Defaultbars from './Defaultbars';
+import Section6 from "../Home/Section6";
 import './TeamConnect.css';
 
 function TeamConnect() {
@@ -12,66 +13,118 @@ function TeamConnect() {
         vid1s: 'Gradient 2.mp4',
     };
 
-    const [pdfs, setPdfs] = useState([]);
-    const [selectedPdf, setSelectedPdf] = useState(null);
-  
-    const handleFileChange = (e) => {
-      if (e.target.files[0]) {
-        setSelectedPdf(e.target.files[0]);
-      }
+    const [projects, setProjects] = useState([]);
+    const [emailMessage, setEmailMessage] = useState('');
+    const [whatsappMessage, setWhatsappMessage] = useState('');
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                setUserId(null);
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            if (userId) {
+                const q = query(collection(db, "projects"), where("userId", "==", userId));
+                const querySnapshot = await getDocs(q);
+                const userProjects = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setProjects(userProjects);
+            }
+        };
+
+        fetchProjects();
+    }, [userId]);
+
+    const shareViaEmail = (message, reportURL) => {
+        window.location.href = `mailto:?subject=Project Report&body=${message}%0D%0A${reportURL}`;
     };
-  
-    const handleUpload = async () => {
-      if (!selectedPdf) return;
-  
-      const storageRef = ref(storage, `pdfs/${selectedPdf.name}`);
-      await uploadBytes(storageRef, selectedPdf);
-      const url = await getDownloadURL(storageRef);
-  
-      await addDoc(collection(db, 'pdfs'), {
-        name: selectedPdf.name,
-        url: url,
-      });
-  
-      setPdfs([...pdfs, { name: selectedPdf.name, url: url }]);
-      setSelectedPdf(null);
+
+    const shareViaWhatsApp = (message, reportURL) => {
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message + "\n" + reportURL)}`;
+        window.open(whatsappUrl, "_blank");
     };
-  
-    const shareViaEmail = (pdf) => {
-      const subject = `Check out this PDF: ${pdf.name}`;
-      const body = `Hi,\n\nI wanted to share this PDF with you: ${pdf.name}\n\nLink: ${pdf.url}\n\nBest regards,`;
-      window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    };
-  
-    const shareViaWhatsApp = (pdf) => {
-      const message = `Check out this PDF: ${pdf.name}\n\nLink: ${pdf.url}`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`);
-    };
-    
-    return(
+
+    return (
         <div>
-            <Grid/>
+            <Grid />
             <video id="background-video" src={vids.vid1s} controls loop autoPlay muted></video>
-            <Defaultbars/>
+            <Defaultbars />
             <div className='teamhub'>
-                <h1>Share your project with your Team and Friends</h1>
-                <div className="pdf-list">
-                    <h2>Projects worked on</h2>
-                    <ul>
-                    {pdfs.map((pdf, index) => (
-                        <li key={index}>
-                        {pdf.name}
-                        <button onClick={() => shareViaEmail(pdf)}>Share via Email</button>
-                        <button onClick={() => shareViaWhatsApp(pdf)}>Share via WhatsApp</button>
-                        </li>
-                    ))}
-                    </ul>
+                <div>
+                    <h1>Share your projects with your Team and Friends</h1>
+                </div>
+                <h2>Projects currently worked on:</h2>
+                <div className='borderteam'>
+                    {/* Check if the user has any projects */}
+                    {projects.length === 0 ? (
+                        <p>You have no current projects. Please checkout the features of MeanAs from your dashboard. Thank you.</p>
+                    ) : (
+                        projects.map(project => (
+                            <div key={project.id} onClick={() => setSelectedProject(project)}>
+                                <h3>{project.title}</h3>
+                                <p>{project.description}</p>
+                                <a href={project.reportURL} target="_blank" rel="noopener noreferrer">View Report</a>
+                            </div>
+                        ))
+                    )}
+                </div>
+                <div className="sharing-container">
+                    <div className="sharing-section">
+                        <label>Share via Email</label>
+                        <textarea
+                            type='text'
+                            placeholder='Add a message to convey clarity to your team and friends.'
+                            value={emailMessage}
+                            onChange={(e) => setEmailMessage(e.target.value)}
+                            required
+                        />
+                        <button className='share-button' onClick={() => {
+                            if (selectedProject) {
+                                shareViaEmail(emailMessage, selectedProject.reportURL);
+                            } else {
+                                alert('Please select a project first.');
+                            }
+                        }}>
+                            Send
+                        </button>
+                    </div>
+                    <div className="sharing-section">
+                        <label>Share via WhatsApp</label>
+                        <textarea
+                            type='text'
+                            placeholder='Add a message to convey clarity to your team and friends.'
+                            value={whatsappMessage}
+                            onChange={(e) => setWhatsappMessage(e.target.value)}
+                            required
+                        />
+                        <button className='share-button' onClick={() => {
+                            if (selectedProject) {
+                                shareViaWhatsApp(whatsappMessage, selectedProject.reportURL);
+                            } else {
+                                alert('Please select a project first.');
+                            }
+                        }}>
+                            Send
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <p>Thank you for using the services of MeanAs to gain clarity, confidence and accurate interpretations to your specific projects. We are very grateful please share your testimonies with us below.</p>
                 </div>
             </div>
-            <Footer/>
+            <Section6 />
+            <Footer />
         </div>
-    )
-};
-
+    );
+}
 
 export default TeamConnect;
