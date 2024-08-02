@@ -1,8 +1,15 @@
 /* TeamConnect Styles */
+#allteam{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .teamhub {
     margin: auto;
-    position: absolute;
-    top: 8em;
+    position: relative;
+    top: 8.5em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +23,7 @@
     border: 2px solid silver;
     border-radius: 15px;
     padding: 2em;
-    margin-left: 34.5%;
+    margin-bottom: 15%;
 }
 
 .teamhub h1 {
@@ -115,14 +122,21 @@
 
 /* Combined Media Query for various screen sizes */
 @media all and (max-width: 430px), all and (max-width: 414px), all and (max-width: 375px) {
+    #allteam{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 
     .teamhub {
         width: 90%;
         margin-left: 5%;
-        top: 3em;
-        padding: 1.5em;
+        top: 2.2em;
+        padding: 1.3em;
         position: relative;
         margin-bottom: 4em;
+        margin-top: 4em;
     }
 
     .teamhub h1 {
@@ -159,7 +173,7 @@
 
     .teamhub textarea {
         height: 100px;
-        font-size: 0.98em;
+        font-size: 0.99em;
     }
 
     .teamhub button#send {

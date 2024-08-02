@@ -4,7 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Grid from '../../Grid';
 import Footer from '../Home/Footer';
-import Defaultbars from './Defaultbars';
+import Navbar from "../Home/Navbar.jsx";
 import Section6 from "../Home/Section6";
 import './TeamConnect.css';
 
@@ -54,10 +54,10 @@ function TeamConnect() {
     };
 
     return (
-        <div>
+        <div id='allteam'>
             <Grid />
             <video id="background-video" src={vids.vid1s} controls loop autoPlay muted></video>
-            <Defaultbars />
+            <Navbar/>
             <div className='teamhub'>
                 <div>
                     <h1>Share your projects with your Team and Friends</h1>
@@ -66,7 +66,7 @@ function TeamConnect() {
                 <div className='borderteam'>
                     {/* Check if the user has any projects */}
                     {projects.length === 0 ? (
-                        <p>You have no current projects. Please checkout the features of MeanAs from your dashboard. Thank you.</p>
+                        <p>You currently have no projects. Please explore the features of MeanAs on your dashboard. Thank you!</p>
                     ) : (
                         projects.map(project => (
                             <div key={project.id} onClick={() => setSelectedProject(project)}>
@@ -118,7 +118,8 @@ function TeamConnect() {
                     </div>
                 </div>
                 <div>
-                    <p>Thank you for using the services of MeanAs to gain clarity, confidence and accurate interpretations to your specific projects. We are very grateful please share your testimonies with us below.</p>
+                    <p>Thank you for choosing MeanAs for clarity, confidence, and accurate interpretations of your projects.
+                         We appreciate your support and invite you to share your experiences with us below.</p>
                 </div>
             </div>
             <Section6 />
