@@ -63,7 +63,7 @@ function Defaultbars() {
                     <Link className="dashlis" to="/Dashboard"><div className="dashs"><img id="dass" src={dashimg.over} alt="Overview" /></div>Overview</Link>
                     <Link className="dashlis" to="/Projects/:id"><div className="dashs"><img id="dass" src={dashimg.proj} alt="Projects" /></div>Projects</Link>
                     <Link className="dashlis" to="/TeamConnect"><div className="dashs"><img id="dass" src={dashimg.team} alt="Team Connect" /></div>Team Connect</Link>
-                    <Link className="dashlis" to="#"><div className="dashs"><img id="dass" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link>
+                    <Link className="dashlis" to="/Assistant"><div className="dashs"><img id="dass" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link>
                 </ul>
                 <Link id="upgras" to="/Pricing">
                     <div>
@@ -87,7 +87,7 @@ function Defaultbars() {
                             <li><Link className="dashlis" to="/Dashboard"><div className="dashs"><img id="dass" src={dashimg.over} alt="Overview" /></div>Overview</Link></li>
                             <li><Link className="dashlis" to="/Projects/:id"><div className="dashs"><img id="dass" src={dashimg.proj} alt="Projects" /></div>Projects</Link></li>
                             <li><Link className="dashlis" to="/TeamConnect"><div className="dashs"><img id="dass" src={dashimg.team} alt="Team Connect" /></div>Team Connect</Link></li>
-                            <li><Link className="dashlis" to="#"><div className="dashs"><img id="dass" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link></li>
+                            <li><Link className="dashlis" to="/Assistant"><div className="dashs"><img id="dass" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link></li>
                             <li>
                                 <Link id="upgrap" to="/Pricing">
                                     <div>

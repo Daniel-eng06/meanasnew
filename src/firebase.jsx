@@ -4,6 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
+
 // Customize with your Firebase project configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA4FZHYXUWcw3gBJ4LPy1A3UB-iTuCxhjo",
@@ -12,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "meanas-692aa.appspot.com",
   messagingSenderId: "512910836565",
   appId: "1:512910836565:web:02fc2fa779c5bbe50ce5dc",
-  measurementId: "G-LH11N0Z7LB",
+  measurementId: "G-LH11N0Z7LB"
 };
 
 const app = initializeApp(firebaseConfig);
