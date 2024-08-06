@@ -15,7 +15,7 @@ import Profile from "./Components/DashBoard/Profile.jsx";
 import Projects from './Components/DashBoard/Projects.jsx';
 import TeamConnect from './Components/DashBoard/TeamConnect.jsx';
 import Assistant from './Components/DashBoard/AI-Assistant.jsx';
-
+import HelpCenter from './Components/Home/HelpCenter.jsx';
 
 
 function MeanAsApp() {
@@ -36,6 +36,7 @@ function MeanAsApp() {
                       <Route path="/Projects/:id" element={<Projects/>} />
                       <Route index path="/TeamConnect" element={<TeamConnect/>}/>
                       <Route index path="/Assistant" element={<Assistant/>}/>
+                      <Route index path="/HelpCenter" element={<HelpCenter/>}/>
                     </Routes>
                 </Router>
            </div>)

@@ -16,7 +16,7 @@ function Facts() {
       <p>
         For more information, visit the
         <br />
-        <Link id="span">MeanAs Help Center</Link>
+        <Link id="span" to="/HelpCenter">MeanAs Help Center</Link>
       </p>
       <div className="popdown">
         {faqs.map((item, index) => (

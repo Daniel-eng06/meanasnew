@@ -11,7 +11,7 @@ function Footer() {
           <Link to="/Features">Features</Link>
           <Link to="/Authentication">Dashboard</Link>
           <Link to="/Pricing">Pricing</Link>
-          <Link to="#">MeanAs Help Center</Link>
+          <Link to="/HelpCenter">MeanAs Help Center</Link>
         </nav>
         <p>&copy; 2024 MeanAs.com. All rights reserved.</p>
       </div>
