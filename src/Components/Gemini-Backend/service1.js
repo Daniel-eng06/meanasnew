@@ -9,7 +9,7 @@ dotenv.config();
 const router = Router();
 
 // Initialize Google GenerativeAI
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
@@ -37,7 +37,7 @@ async function askAndRespond(msg) {
                 text += chunkText;
                 console.log('AT:', chunkText);
             }
-            await db.collection('chats').add({ message: msg, response: text });
+            await db.collection('chats').add({ message: msg, response: text, timestamp: new Date() });
             isAwaitingResponse = false; // Reset flag after stream is complete
         } catch (error) {
             console.error('Error:', error);

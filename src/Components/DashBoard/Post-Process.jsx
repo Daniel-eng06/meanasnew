@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
+import axios from 'axios';
 
 function Postprocess(){
     const vid ={
@@ -50,6 +51,15 @@ function Postprocess(){
                     return getDownloadURL(storageRef);
                 }));
 
+                const response = await axios.post('/postprocess', {
+                    goal,
+                    imageUrls,
+                    analysisType,
+                    detailLevel,
+                });
+
+                const { id, response: generatedResponse } = response.data;
+
                 await addDoc(collection(db, 'errorGoals'), {
                     goal,
                     analysisType,
@@ -62,7 +72,8 @@ function Postprocess(){
                 setGoal('');
                 setAnalysisType('');
                 setDetailLevel([]);
-                setResponse('Images uploaded successfully!');
+                setResponse(generatedResponse);
+
             } catch (error) {
                 console.error("Error uploading file or sending data", error);
             }

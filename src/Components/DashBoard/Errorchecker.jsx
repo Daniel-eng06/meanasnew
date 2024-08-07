@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
+import axios from 'axios';
 
 function Errorchecker() {
   const vid = {
@@ -34,32 +35,46 @@ function Errorchecker() {
     e.preventDefault();
 
     if (images.length > 0 && goal && option) {
-      try {
-        const imageUrls = await Promise.all(images.map(async (image) => {
-          const storageRef = ref(storage, `errors/${image.name}`);
-          await uploadBytes(storageRef, image);
-          return getDownloadURL(storageRef);
-        }));
+        try {
+            // Upload images to Firebase Storage and get their URLs
+            const imageUrls = await Promise.all(images.map(async (image) => {
+                const storageRef = ref(storage, `errors/${image.name}`);
+                await uploadBytes(storageRef, image);
+                return getDownloadURL(storageRef);
+            }));
 
-        await addDoc(collection(db, 'errorGoals'), {
-          goal,
-          imageUrls,
-          software: option === 'other' ? customOption : option,
-          timestamp: new Date(),
-        });
+            // Send data to the backend
+            const response = await axios.post('/errorchecker', {
+                goal,
+                imageUrls,
+                analysisType: option === 'other' ? customOption : option,
+                // Include detailLevel here if you have it
+            });
 
-        setImages([]);
-        setGoal('');
-        setOption('');
-        setCustomOption('');
-        setResponse('Images uploaded successfully!');
-      } catch (error) {
-        console.error("Error uploading file or sending data", error);
-      }
+            const { id, response: generatedResponse } = response.data;
+
+            // Save data to Firestore
+            await addDoc(collection(db, 'errorGoals'), {
+                goal,
+                imageUrls,
+                software: option === 'other' ? customOption : option,
+                timestamp: new Date(),
+            });
+
+            // Reset form state
+            setImages([]);
+            setGoal('');
+            setOption('');
+            setCustomOption('');
+            setResponse(generatedResponse);
+
+        } catch (error) {
+            console.error("Error uploading file or sending data", error);
+        }
     } else {
-      alert('Please upload images, enter your goal, and select the analysis software.');
+        alert('Please upload images, enter your goal, and select the analysis software.');
     }
-  };
+};
 
   const generatePDF = async () => {
     const doc = new jsPDF();
@@ -139,7 +154,7 @@ function Errorchecker() {
               id="description"
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
-              placeholder='Please describe your project, goals and objectives... MeanAs is here to help you solve the error very fast and accurately.'
+              placeholder='Please describe briefly your project, goals and objectives... MeanAs is here to help you solve the error very fast and accurately.'
               required
             />
           </div>

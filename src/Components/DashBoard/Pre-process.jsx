@@ -48,7 +48,7 @@ function Preprocess() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     if (images.length > 0) {
       try {
         // Upload images to Firebase Storage
@@ -57,9 +57,9 @@ function Preprocess() {
           await uploadBytes(storageRef, image);
           return getDownloadURL(storageRef);
         }));
-
+  
         // Send data to the backend server
-        const response = await axios.post('/process', {
+        const response = await axios.post('/preprocess', {
           description,
           imageUrls,
           materials,
@@ -68,9 +68,9 @@ function Preprocess() {
           analysisType,
           timestamp: new Date(),
         });
-
+  
         const { id, response: generatedResponse } = response.data;
-
+  
         setImages([]);
         setDescription('');
         setMaterials([]);
@@ -78,13 +78,12 @@ function Preprocess() {
         setCustomOption('');
         setAnalysisType('');
         setLoading(false);
-
         setResponse(generatedResponse);
-
+  
         alert('Images uploaded and processed successfully!');
         // Redirect to the project page with the newly created project ID
         navigate(`/Projects/${id}`);
-
+  
       } catch (error) {
         setLoading(false);
         console.error('Error uploading images and saving project:', error);
@@ -95,6 +94,7 @@ function Preprocess() {
       alert('Please select images to upload.');
     }
   };
+  
 
   const generatePDF = async () => {
     const doc = new jsPDF();
@@ -176,7 +176,7 @@ function Preprocess() {
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder='Please describe your project, goals and objectives... MeanAs can assist you throughout your specific project.'
+              placeholder='Please describe briefly your project, goals and objectives... MeanAs can assist you throughout your specific project.'
               required
             />
           </div>
