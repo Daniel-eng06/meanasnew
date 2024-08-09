@@ -54,11 +54,16 @@
     border-radius: 20px;
 }
 
+.assub div{
+    scroll-behavior: auto;
+}
+
 .assub p {
     background: rgba(255, 255, 255, 0.1);
     padding: 10px;
     border-radius: 5px;
     margin: 10px 0;
+    font-size: 16px;
 }
 
 .chatai {
@@ -70,7 +75,7 @@
     position: relative;
 }
 
-#intext {
+.chatai #intext {
     flex-grow: 1;
     padding: 12px;
     border: none;

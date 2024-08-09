@@ -3,9 +3,8 @@ import "./Post-process.css"
 import Footer from "../Home/Footer";
 import Grid from "../../Grid";
 import Defaultbars from "./Defaultbars";
-import { storage, db } from '../../firebase';
+import { storage} from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
@@ -42,38 +41,34 @@ function Postprocess(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (images.length > 0 && goal && analysisType && detailLevel.length > 0) {
             try {
+                // Upload images to Firebase Storage
                 const imageUrls = await Promise.all(images.map(async (image) => {
                     const storageRef = ref(storage, `errors/${image.name}`);
                     await uploadBytes(storageRef, image);
                     return getDownloadURL(storageRef);
                 }));
-
+    
+                // Send data to backend
                 const response = await axios.post('/postprocess', {
                     goal,
                     imageUrls,
                     analysisType,
                     detailLevel,
                 });
-
+    
+                // Handle backend response
                 const { id, response: generatedResponse } = response.data;
-
-                await addDoc(collection(db, 'errorGoals'), {
-                    goal,
-                    analysisType,
-                    detailLevel,
-                    imageUrls,
-                    timestamp: new Date(),
-                });
-
+    
+                // Update component state
                 setImages([]);
                 setGoal('');
                 setAnalysisType('');
                 setDetailLevel([]);
                 setResponse(generatedResponse);
-
+    
             } catch (error) {
                 console.error("Error uploading file or sending data", error);
             }
@@ -81,6 +76,7 @@ function Postprocess(){
             alert('Please upload images, enter your goal, select an analysis type, and choose the level of detail.');
         }
     };
+    
 
     const generatePDF = async () => {
         const doc = new jsPDF();

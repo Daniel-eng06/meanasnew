@@ -21,9 +21,9 @@ function Preprocess() {
   const [option, setOption] = useState('');
   const [customOption, setCustomOption] = useState('');
   const [analysisType, setAnalysisType] = useState(''); 
-  const [materials, setMaterials] = useState([]); // State to store selected materials
+  const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState(''); // State to store ChatGPT response
+  const [response, setResponse] = useState('');
 
   const navigate = useNavigate();
 
@@ -81,7 +81,6 @@ function Preprocess() {
         setResponse(generatedResponse);
   
         alert('Images uploaded and processed successfully!');
-        // Redirect to the project page with the newly created project ID
         navigate(`/Projects/${id}`);
   
       } catch (error) {
@@ -104,7 +103,6 @@ function Preprocess() {
     doc.text(`Analysis Type: ${analysisType}`, 10, 40);
     doc.text(`Preferred Software: ${option} ${customOption}`, 10, 50);
     
-    // Adding AI response to the PDF
     const responseLines = response.split('\n');
     let yOffset = 60;
     responseLines.forEach(line => {
@@ -112,15 +110,12 @@ function Preprocess() {
       yOffset += 10;
     });
   
-    // Output PDF as a Blob
     const pdfBlob = doc.output("blob");
   
-    // Upload PDF to Firebase Storage
     const pdfRef = ref(storage, `reports/report_${new Date().getTime()}.pdf`);
     await uploadBytes(pdfRef, pdfBlob);
     const pdfURL = await getDownloadURL(pdfRef);
   
-    // Automatically download the PDF
     const pdfBlobURL = URL.createObjectURL(pdfBlob);
     const downloadLink = document.createElement("a");
     downloadLink.href = pdfBlobURL;

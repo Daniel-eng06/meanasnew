@@ -1,15 +1,17 @@
-// gemini-backend/service1.js
 import dotenv from 'dotenv';
 import { Router } from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { Configuration, OpenAIApi } from 'openai';
 import admin from 'firebase-admin';
 
 dotenv.config();
 
 const router = Router();
 
-// Initialize Google GenerativeAI
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+// Initialize OpenAI API
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
@@ -23,22 +25,26 @@ async function askAndRespond(msg) {
     if (!isAwaitingResponse) {
         isAwaitingResponse = true; // Set flag to true as we start receiving the stream
         try {
-            const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-            const chat = model.startChat({
-                history: [], // Start with an empty history
-                generationConfig: {
-                    maxOutputTokens: 500,
-                },
-            });
-            const result = await chat.sendMessageStream(msg);
+            const response = await openai.createChatCompletion({
+                model: 'gpt-4-turbo',
+                messages: [{ role: 'user', content: msg }],
+                stream: true,
+                max_tokens: 500,
+            }, { responseType: 'stream' });
+
             let text = '';
-            for await (const chunk of result.stream) {
-                const chunkText = await chunk.text(); // Assuming chunk.text() returns a Promise
+            response.data.on('data', (chunk) => {
+                // Append the chunk to text and log it
+                const chunkText = chunk.toString('utf8');
                 text += chunkText;
-                console.log('AT:', chunkText);
-            }
-            await db.collection('chats').add({ message: msg, response: text, timestamp: new Date() });
-            isAwaitingResponse = false; // Reset flag after stream is complete
+                console.log('Chunk:', chunkText);
+            });
+
+            response.data.on('end', async () => {
+                await db.collection('chats').add({ message: msg, response: text, timestamp: new Date() });
+                isAwaitingResponse = false; // Reset flag after stream is complete
+            });
+
         } catch (error) {
             console.error('Error:', error);
             isAwaitingResponse = false; // Ensure flag is reset on error too

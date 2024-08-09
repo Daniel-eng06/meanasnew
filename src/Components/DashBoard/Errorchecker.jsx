@@ -3,9 +3,8 @@ import './Errorchecker.css';
 import Footer from '../Home/Footer';
 import Grid from '../../Grid';
 import Defaultbars from './Defaultbars';
-import { storage, db } from '../../firebase';
+import { storage} from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc } from 'firebase/firestore';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
@@ -48,18 +47,10 @@ function Errorchecker() {
                 goal,
                 imageUrls,
                 analysisType: option === 'other' ? customOption : option,
-                // Include detailLevel here if you have it
+                // No need to send `timestamp`, the backend will handle this
             });
 
             const { id, response: generatedResponse } = response.data;
-
-            // Save data to Firestore
-            await addDoc(collection(db, 'errorGoals'), {
-                goal,
-                imageUrls,
-                software: option === 'other' ? customOption : option,
-                timestamp: new Date(),
-            });
 
             // Reset form state
             setImages([]);
@@ -75,6 +66,7 @@ function Errorchecker() {
         alert('Please upload images, enter your goal, and select the analysis software.');
     }
 };
+
 
   const generatePDF = async () => {
     const doc = new jsPDF();

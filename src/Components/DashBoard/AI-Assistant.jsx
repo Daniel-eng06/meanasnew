@@ -36,7 +36,6 @@ function Assistant() {
         }
     };
 
-
     return (
         <div className='assistant'>
             <Defaultbars />

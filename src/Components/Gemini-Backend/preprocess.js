@@ -1,8 +1,6 @@
-// gemini-backend/preprocess.js
 import express from 'express';
 import { getFirestore, collection, addDoc } from 'firebase-admin/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase-admin/storage';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import axios from 'axios';
 
@@ -14,11 +12,22 @@ const router = express.Router();
 const firestore = getFirestore();
 const storage = getStorage();
 
-// Initialize GoogleGenerativeAI with your API_KEY
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-const model = genAI.getGenerativeModel({
-  model: 'gemini-1.5-pro',
-});
+// Function to make an API call to OpenAI Vision Pro
+async function callOpenAIVisionPro(imageUrls, promptText) {
+  const data = {
+    images: imageUrls.map(url => ({ url })),
+    prompt: promptText,
+  };
+
+  const response = await axios.post('https://api.openai.com/v1/images', data, {
+    headers: {
+      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  return response.data;
+}
 
 // Endpoint to handle data processing
 router.post('/', async (req, res) => {
@@ -45,14 +54,7 @@ router.post('/', async (req, res) => {
       return getDownloadURL(storageRef);
     }));
 
-    // Generate content using text and the URI references for the uploaded files
-    const fileDataArray = uploadedImageUrls.map(uploadedUrl => ({
-      fileData: {
-        mimeType: 'image/jpeg',
-        fileUri: uploadedUrl,
-      },
-    }));
-
+    // Create the prompt text based on the analysis type
     let promptText;
     if (analysisType === 'FEA') {
       promptText = `Describe how to execute the project with the materials ${materials} and options ${option} ${customOption}. The analysis type is FEA.`;
@@ -62,12 +64,9 @@ router.post('/', async (req, res) => {
       promptText = `Describe how to execute the project with the materials ${materials} and options ${option} ${customOption}. The analysis type is ${analysisType}.`;
     }
 
-    const result = await model.generateContent([
-      ...fileDataArray,
-      { text: promptText },
-    ]);
-
-    const generatedResponse = result.response.text();
+    // Call OpenAI Vision Pro to process images and the prompt
+    const openAIResponse = await callOpenAIVisionPro(uploadedImageUrls, promptText);
+    const generatedResponse = openAIResponse.choices[0].text;
 
     // Save the generated response to Firestore
     await addDoc(collection(firestore, 'responses'), {
