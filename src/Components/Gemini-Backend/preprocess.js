@@ -58,8 +58,8 @@ router.post('/', async (req, res) => {
     let promptText;
     if (analysisType === 'FEA') {
       promptText = `
-        As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
-        With this as my ${description}:
+        Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
+        Task: With this as my ${description}:
 
         1. Model Analysis and Geometry Cleanup:
           - Analyze the model in the provided images, focusing on geometry cleanup.
@@ -97,8 +97,8 @@ router.post('/', async (req, res) => {
 
     } else if (analysisType === 'CFD') {
       promptText = `
-        As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
-        With this as my ${description}:
+        Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
+        Task: With this as my ${description}:
     
         1. Model Analysis and Geometry Cleanup:
           - Analyze the model in the provided images, focusing on geometry cleanup for fluid dynamics.

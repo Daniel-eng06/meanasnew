@@ -57,9 +57,9 @@ router.post('/', async (req, res) => {
     let promptText;
     if (analysisType === 'FEA') {
       promptText = `
-      As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in Finite Element Analysis (FEA), your task involves post-processing the FEA results of the provided model.
+      Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in Finite Element Analysis (FEA), your task involves post-processing the FEA results of the provided model.
       
-      With this as my ${description}:
+      Task: With this as my ${description}:
       
       1. FEA Results Interpretation:
          - Analyze the stress and strain distributions obtained from the FEA analysis in the provided visualized images.
@@ -80,21 +80,21 @@ router.post('/', async (req, res) => {
       
       4. Roadmap for Final Reporting:
          - Create a clear and concise roadmap for compiling the final FEA report using this detail level: ${detailLevel}.
-         - **${detailLevel}**: Provide the explanation and final report according to the specified detail level:
-           - **High Student Level**: Simplify the explanation with basic terminology and illustrative examples, suitable for individuals with a limited background in engineering.
-           - **Detailed Technical Insight**: Offer an in-depth analysis with technical details, including mathematical formulations and thorough discussions, addressing specific technical questions.
-           - **Marketing Level**: Highlight the key benefits and real-world applications of the FEA results, using persuasive language to emphasize the impact and relevance.
-           - **Research Level**: Deliver a comprehensive, scholarly report with advanced technical details, theoretical background, and references to relevant research, supporting a deep understanding of the results.
+         - For instance if the level of detail is ${detailLevel}: Provide the explanation and final report according to the specified detail level:
+           - High Student Level: Simplify the explanation with basic terminology and illustrative examples, suitable for individuals with a limited background in engineering.
+           - Detailed Technical Insight: Offer an in-depth analysis with technical details, including mathematical formulations and thorough discussions, addressing specific technical questions.
+           - Marketing Level: Highlight the key benefits and real-world applications of the FEA results, using persuasive language to emphasize the impact and relevance.
+           - Research Level: Deliver a comprehensive, scholarly report with advanced technical details, theoretical background, and references to relevant research, supporting a deep understanding of the results.
       `;      
     } else if (analysisType === 'CFD') {
       promptText = `
-      As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in Computational Fluid Dynamics (CFD), your task involves post-processing the CFD results of the provided model.
+      Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in Computational Fluid Dynamics (CFD), your task involves post-processing the CFD results of the provided model.
 
-      With this as my ${description}:
+      Task: With this as my ${description}:
 
       1. CFD Results Interpretation:
         - Analyze the fluid flow patterns and other relevant results obtained from the CFD analysis in the provided visualized images.
-        - Identify key areas of interest, such as regions with high turbulence, pressure drops, or flow separations.
+        - Identify key areas of interest, such as regions with high turbulence, pressure drops, or flow separations and any sudden flow change.
         - Compare the analyzed results with any theoretical or experimental data if available.
         - Provide a detailed interpretation of these results, explaining how they align with the objectives of the CFD study.
 
@@ -102,7 +102,7 @@ router.post('/', async (req, res) => {
         - Evaluate the performance of the materials ${goal} and boundary conditions used in the CFD analysis.
         - Assess how the boundary conditions (e.g., inlet/outlet conditions, wall conditions, etc.) affect the fluid flow and heat transfer results.
         - Suggest any necessary changes to the boundary conditions or materials based on the CFD results.
-        - Include relevant properties such as fluid viscosity, thermal conductivity, and specifics of boundary conditions in your evaluation.
+        - Include relevant numerical parameters or properties such as fluid viscosity, thermal conductivity, and specifics of boundary conditions in your evaluation.
 
       3. CFD Results Comparison and Validation:
         - Compare the CFD results with any available experimental data, theoretical predictions, or previous simulations (if applicable).
@@ -111,11 +111,11 @@ router.post('/', async (req, res) => {
 
       4. Roadmap for Final Reporting:
         - Create a clear and concise roadmap for compiling the final CFD report using this detail level: ${detailLevel}.
-        - **${detailLevel}**: Provide the explanation and final report according to the specified detail level:
-          - **High Student Level**: Simplify the explanation with basic terminology and illustrative examples, suitable for individuals with a limited background in fluid dynamics.
-          - **Detailed Technical Insight**: Offer an in-depth analysis with technical details, including mathematical formulations, assumptions made during the CFD analysis, and thorough discussions of the results.
-          - **Marketing Level**: Highlight the key benefits and practical applications of the CFD results, using persuasive language to emphasize their impact on real-world problems.
-          - **Research Level**: Deliver a comprehensive, scholarly report with advanced technical details, theoretical background, and references to relevant research, supporting a deep understanding of the CFD results.
+        - For instance if the level of detail is ${detailLevel}: Provide the explanation and final report according to the specified detail level:
+          - High Student Level: Simplify the explanation with basic terminology and illustrative examples, suitable for individuals with a limited background in fluid dynamics.
+          - Detailed Technical Insight: Offer an in-depth analysis with technical details, including mathematical formulations, assumptions made during the CFD analysis, and thorough discussions of the results.
+          - Marketing Level: Highlight the key benefits and practical applications of the CFD results, using persuasive language to emphasize their impact on real-world problems.
+          - Research Level: Deliver a comprehensive, scholarly report with advanced technical details, theoretical background, and references to relevant research, supporting a deep understanding of the CFD results.
       `;
     } else {
       promptText = `
