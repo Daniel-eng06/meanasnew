@@ -41,10 +41,10 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* Remove justify-content to prevent centering and allow content to flow naturally */
   align-items: center;
   margin-left: 17.5em;
-  height: auto; /* Adjust height to auto to fit content */
+  padding-top: 10%;
   top: 9.375em;
   width: 31.25em;
   padding: 1.25em;
@@ -52,7 +52,13 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 0.25em 1.25em rgba(0, 0, 0, 0.8);
+
+  /* Adjust height to prevent content from exceeding the viewport */
+  max-height: 120vh; /* 80% of the viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+
 
 .image-form {
   display: flex;
@@ -71,6 +77,7 @@
   border-radius: 0.3125em;
   padding: 1.375em;
   position: relative;
+  scroll-behavior: auto;
 }
 
 .custom-file-upload #hov:hover {
@@ -93,6 +100,7 @@
   flex-wrap: wrap;
   gap: 0.625em;
   margin-top: 0.625em;
+  scroll-behavior: auto;
 }
 
 .image-preview {
@@ -151,8 +159,9 @@
   border-radius: 0.625em;
   cursor: pointer;
   font-size: 1em;
-  margin-left: 18.75em;
-  margin-top: 0.625em;
+  margin-left: 18.0em;
+  margin-top: 1em;
+  margin-bottom: 5%;
 }
 
 #newbut[type="submit"]:disabled {
@@ -162,7 +171,8 @@
 
 #newbut[type="submit"]:hover:not(:disabled) {
   background-color: #ff8800;
-  border: 0.0625em solid black;
+  border-bottom: 2px solid black;
+
 }
 
 .radio-group {

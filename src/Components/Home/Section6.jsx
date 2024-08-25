@@ -29,7 +29,7 @@ function FeedbackForm() {
   return (
     <div className="feedback-form-container">
       <h1 className="comment">
-        More Feedbacks, More Better <span>MeanAs</span> <br/> For Your Specific FEA/CFD Projects
+        More Feedback, More Better <span>MeanAs</span> <br/> For Your Specific FEA/CFD Projects
       </h1>
       <form onSubmit={handleSubmit} className="feedback-form">
         <div className="feedback-left">
@@ -53,7 +53,7 @@ function FeedbackForm() {
             placeholder="email@example.com"
             required
           />
-          <button type="submit">Submit Your Feedbacks</button>
+          <button type="submit">Submit Your Feedback</button>
         </div>
       </form>
       {message && <p>{message}</p>}
