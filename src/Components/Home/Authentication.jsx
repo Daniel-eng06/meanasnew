@@ -152,7 +152,7 @@ const Authentication = () => {
       </button>
       {/* New Google Sign-In Button */}
       <button className="google-signin" onClick={handleGoogleSignIn}>
-        Sign in with Google
+        Signin with Google
       </button>
     </div>
   );

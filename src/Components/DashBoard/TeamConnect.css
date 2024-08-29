@@ -118,7 +118,20 @@
     margin-right: 0%;
     width: 7vw;
     height: 10vh;
+    padding: 0.625em 1.25em;
+    font-size: 0.95em;
+    color: white;
+    background-color: #000925;
+    border-radius: 0.625em;
+    border: 1px solid black;
+    margin-top: 1%;
+    margin-bottom: 2%;
 }
+
+.share-button:hover{
+    background-color: #ff8800;
+}
+
 
 /* Combined Media Query for various screen sizes */
 @media all and (max-width: 430px), all and (max-width: 414px), all and (max-width: 375px) {
