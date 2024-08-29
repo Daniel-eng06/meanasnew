@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { auth, db } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth, db, analytics, googleProvider } from '../../firebase'; // Import the correct googleProvider instance
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Authentication.css";
-import { analytics } from '../../firebase';
 import { logEvent } from "firebase/analytics";
 
 const Authentication = () => {
@@ -16,6 +15,7 @@ const Authentication = () => {
   const location = useLocation();
   const plan = location.state?.plan || "Explorer Plan"; // default to Explorer Plan
 
+  // Function to handle user authentication (sign up or sign in)
   const handleAuth = async (e) => {
     e.preventDefault();
     setError("");
@@ -24,6 +24,8 @@ const Authentication = () => {
       if (isSignUp) {
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        
+        // Save the user details in Firestore under 'users' collection
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
           plan: plan,
@@ -32,12 +34,38 @@ const Authentication = () => {
       } else {
         userCredential = await signInWithEmailAndPassword(auth, email, password);
       }
+      
+      // Navigate to the dashboard after successful authentication
       navigate("/Dashboard", { state: { plan: plan } });
     } catch (error) {
       handleError(error);
     }
   };
 
+  // New function to handle Google Sign-In
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider); // Use googleProvider from the import
+      const user = result.user;
+
+      // Check if the user is signing up for the first time
+      if (result.additionalUserInfo.isNewUser) {
+        // Save the user details in Firestore under 'users' collection
+        await setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          plan: plan,
+          signupDate: serverTimestamp()
+        });
+      }
+
+      // Navigate to the dashboard after successful authentication
+      navigate("/Dashboard", { state: { plan: plan } });
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  // Function to handle errors during authentication
   const handleError = (error) => {
     switch (error.code) {
       case "auth/email-already-in-use":
@@ -60,12 +88,20 @@ const Authentication = () => {
     }
   };
 
+  // Effect to monitor authentication state and redirect user if already signed in
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        // If user is authenticated, redirect to Dashboard
+        console.log("User is authenticated:", user);
         navigate("/Dashboard", { state: { plan: location.state?.plan } });
+      } else {
+        // If user is not authenticated, log the status
+        console.log("No user is signed in.");
       }
     });
+
+    // Cleanup the subscription on component unmount
     return () => unsubscribe();
   }, [navigate, location.state]);
 
@@ -74,8 +110,8 @@ const Authentication = () => {
     vid1: "Gradient 2.mp4",
   };
 
+  // Function to handle link click events and log them in analytics
   const handleLinkClick = (linkAuth) => {
-    // Log the click event with a specific link name
     logEvent(analytics, 'link_click', { link_auth: linkAuth });
   };
 
@@ -103,11 +139,20 @@ const Authentication = () => {
           placeholder="#MeanAs.ai"
           required
         />
-        <button type="submit" onClick={() => handleLinkClick(isSignUp ? "Signup with Email" : "Signin with Email")}>{isSignUp ? "Signup with Email" : "Signin with Email"}</button>
+        <button  id='sign'
+          type="submit" 
+          onClick={() => handleLinkClick(isSignUp ? "Signup with Email" : "Signin with Email")}
+        >
+          {isSignUp ? "Signup with Email" : "Signin with Email"}
+        </button>
       </form>
       <p id="or">OR</p>
-      <button onClick={() => setIsSignUp(!isSignUp)} >
+      <button onClick={() => setIsSignUp(!isSignUp)} id='sign' >
         {isSignUp ? "Signin with Email" : "Signup with Email"}
+      </button>
+      {/* New Google Sign-In Button */}
+      <button className="google-signin" onClick={handleGoogleSignIn}>
+        Sign in with Google
       </button>
     </div>
   );

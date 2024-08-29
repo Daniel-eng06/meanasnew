@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../firebase'; // Ensure firebase is correctly initialized
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Grid from '../../Grid';
 import Footer from '../Home/Footer';
@@ -19,6 +18,7 @@ function TeamConnect() {
     const [selectedProject, setSelectedProject] = useState(null);
     const [userId, setUserId] = useState(null);
 
+    // Track authentication state
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
@@ -31,13 +31,19 @@ function TeamConnect() {
         return () => unsubscribe();
     }, []);
 
+    // Fetch projects from Firestore
     useEffect(() => {
         const fetchProjects = async () => {
             if (userId) {
-                const q = query(collection(db, "projects"), where("userId", "==", userId));
-                const querySnapshot = await getDocs(q);
-                const userProjects = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setProjects(userProjects);
+                try {
+                    const q = query(collection(db, "projects"), where("userId", "==", userId));
+                    const querySnapshot = await getDocs(q);
+                    const userProjects = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    setProjects(userProjects);
+                } catch (error) {
+                    console.error("Error fetching projects:", error);
+                    alert("An error occurred while fetching your projects. Please try again.");
+                }
             }
         };
 
@@ -45,7 +51,7 @@ function TeamConnect() {
     }, [userId]);
 
     const shareViaEmail = (message, reportURL) => {
-        window.location.href = `mailto:?subject=Project Report&body=${message}%0D%0A${reportURL}`;
+        window.location.href = `mailto:?subject=Project Report&body=${encodeURIComponent(message)}%0D%0A${encodeURIComponent(reportURL)}`;
     };
 
     const shareViaWhatsApp = (message, reportURL) => {
@@ -57,7 +63,7 @@ function TeamConnect() {
         <div id='allteam'>
             <Grid />
             <video id="background-video" src={vids.vid1s} controls loop autoPlay muted></video>
-            <Navbar/>
+            <Navbar />
             <div className='teamhub'>
                 <div>
                     <h1>Share your projects with your Team and Friends</h1>

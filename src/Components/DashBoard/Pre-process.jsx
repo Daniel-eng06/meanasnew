@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Pre-process.css';
 import Footer from '../Home/Footer';
 import Grid from '../../Grid';
 import Defaultbars from './Defaultbars';
-import { storage } from '../../firebase'; 
+import { storage, auth } from '../../firebase'; 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
+import { onAuthStateChanged } from "firebase/auth";
 
 function Preprocess() {
   const vid = {
@@ -26,6 +27,19 @@ function Preprocess() {
   const [response, setResponse] = useState('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // If user is not authenticated, redirect to login/signup page
+        navigate('/Authentication');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -71,13 +85,8 @@ function Preprocess() {
   
         const { id, response: generatedResponse } = response.data;
   
-        setImages([]);
-        setDescription('');
-        setMaterials([]);
-        setOption('');
-        setCustomOption('');
-        setAnalysisType('');
-        setLoading(false);
+        // Clear form inputs
+        resetForm();
         setResponse(generatedResponse);
   
         alert('Images uploaded and processed successfully!');
@@ -94,37 +103,50 @@ function Preprocess() {
     }
   };
   
-
+  const resetForm = () => {
+    setImages([]);
+    setDescription('');
+    setMaterials([]);
+    setOption('');
+    setCustomOption('');
+    setAnalysisType('');
+  };
+  
   const generatePDF = async () => {
-    const doc = new jsPDF();
-    doc.text("Project Report", 10, 10);
-    doc.text(`Description: ${description}`, 10, 20);
-    doc.text(`Materials: ${materials.join(", ")}`, 10, 30);
-    doc.text(`Analysis Type: ${analysisType}`, 10, 40);
-    doc.text(`Preferred Software: ${option} ${customOption}`, 10, 50);
-    
-    const responseLines = response.split('\n');
-    let yOffset = 60;
-    responseLines.forEach(line => {
-      doc.text(line, 10, yOffset);
-      yOffset += 10;
-    });
+    try {
+      const doc = new jsPDF();
+      doc.text("Project Report", 10, 10);
+      doc.text(`Description: ${description}`, 10, 20);
+      doc.text(`Materials: ${materials.join(", ")}`, 10, 30);
+      doc.text(`Analysis Type: ${analysisType}`, 10, 40);
+      doc.text(`Preferred Software: ${option} ${customOption}`, 10, 50);
+      
+      const responseLines = response.split('\n');
+      let yOffset = 60;
+      responseLines.forEach(line => {
+        doc.text(line, 10, yOffset);
+        yOffset += 10;
+      });
   
-    const pdfBlob = doc.output("blob");
+      const pdfBlob = doc.output("blob");
   
-    const pdfRef = ref(storage, `reports/report_${new Date().getTime()}.pdf`);
-    await uploadBytes(pdfRef, pdfBlob);
-    const pdfURL = await getDownloadURL(pdfRef);
+      const pdfRef = ref(storage, `reports/report_${new Date().getTime()}.pdf`);
+      await uploadBytes(pdfRef, pdfBlob);
+      const pdfURL = await getDownloadURL(pdfRef);
   
-    const pdfBlobURL = URL.createObjectURL(pdfBlob);
-    const downloadLink = document.createElement("a");
-    downloadLink.href = pdfBlobURL;
-    downloadLink.download = "report.pdf";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+      const pdfBlobURL = URL.createObjectURL(pdfBlob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pdfBlobURL;
+      downloadLink.download = "report.pdf";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
   
-    alert(`Report generated and uploaded successfully! URL: ${pdfURL}`);
+      alert(`Report generated and uploaded successfully! URL: ${pdfURL}`);
+    } catch (error) {
+      console.error('Error generating or uploading PDF:', error);
+      alert('Failed to generate or upload PDF. Please try again.');
+    }
   };
   
   return (

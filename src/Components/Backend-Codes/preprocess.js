@@ -3,6 +3,7 @@ import { getFirestore, collection, addDoc } from 'firebase-admin/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase-admin/storage';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import multer from 'multer';
 
 dotenv.config();
 
@@ -12,17 +13,37 @@ const router = express.Router();
 const firestore = getFirestore();
 const storage = getStorage();
 
-// Function to make an API call to OpenAI Vision Pro
-async function callOpenAIVisionPro(imageUrls, promptText) {
-  const data = {
-    images: imageUrls.map(url => ({ url })),
-    prompt: promptText,
-  };
+// Set up multer for handling file uploads
+const upload = multer({ storage: multer.memoryStorage() });
 
-  const response = await axios.post('https://api.openai.com/v1/images', data, {
+// Function to make an API call to Claude
+async function callClaudeAPI(imageUrls, promptText) {
+  const messages = [
+    {
+      role: 'user',
+      content: [
+        {
+          type: 'text',
+          text: promptText
+        },
+        ...imageUrls.map(url => ({
+          type: 'image',
+          source: {
+            type: 'url',
+            url: url
+          }
+        }))
+      ]
+    }
+  ];
+
+  const response = await axios.post('https://api.anthropic.com/v1/messages', {
+    model: 'claude-3-sonnet-20240229',
+    messages: messages
+  }, {
     headers: {
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-API-Key': process.env.CLAUDE_API_KEY
     }
   });
 
@@ -30,15 +51,24 @@ async function callOpenAIVisionPro(imageUrls, promptText) {
 }
 
 // Endpoint to handle data processing
-router.post('/', async (req, res) => {
+router.post('/', upload.array('images'), async (req, res) => {
   try {
-    const { description, imageUrls, materials, option, customOption, analysisType } = req.body;
+    const { description, materials, option, customOption, analysisType } = req.body;
+    const files = req.files;
+
+    // Validate input data
+    if (!description || typeof description !== 'string') {
+      return res.status(400).json({ error: 'Invalid description' });
+    }
+
+    if (!files || !Array.isArray(files) || files.length === 0) {
+      return res.status(400).json({ error: 'No images uploaded' });
+    }
 
     // Save data to Firestore
     const projectRef = await addDoc(collection(firestore, 'projects'), {
       description,
-      imageUrls,
-      materials,
+      materials: JSON.parse(materials),
       option,
       customOption,
       analysisType,
@@ -46,12 +76,15 @@ router.post('/', async (req, res) => {
     });
 
     // Upload images to Firebase Storage and get their URLs
-    const uploadedImageUrls = await Promise.all(imageUrls.map(async (url, index) => {
-      const response = await axios.get(url, { responseType: 'arraybuffer' });
-      const buffer = Buffer.from(response.data, 'binary');
-      const storageRef = ref(storage, `uploads/${projectRef.id}_${index}.jpg`);
-      await uploadBytes(storageRef, buffer, { contentType: 'image/jpeg' });
-      return getDownloadURL(storageRef);
+    const uploadedImageUrls = await Promise.all(files.map(async (file, index) => {
+      try {
+        const storageRef = ref(storage, `uploads/${projectRef.id}_${index}.jpg`);
+        await uploadBytes(storageRef, file.buffer, { contentType: file.mimetype });
+        return await getDownloadURL(storageRef);
+      } catch (uploadError) {
+        console.error('Error uploading image:', uploadError);
+        throw new Error('Failed to upload image');
+      }
     }));
 
     // Create the prompt text based on the analysis type
@@ -94,7 +127,6 @@ router.post('/', async (req, res) => {
           - Using all the provided data, create a clear and concise roadmap for conducting the analysis in ${option} ${customOption}.
           - Include detailed recommendations for the analysis process, focusing on achieving the best possible results for the specific model in the provided image.
         `;
-
     } else if (analysisType === 'CFD') {
       promptText = `
         Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
@@ -142,9 +174,9 @@ router.post('/', async (req, res) => {
       `;
     }
 
-    // Call OpenAI Vision Pro to process images and the prompt
-    const openAIResponse = await callOpenAIVisionPro(uploadedImageUrls, promptText);
-    const generatedResponse = openAIResponse.choices[0].text;
+    // Call Claude API to process images and the prompt
+    const claudeResponse = await callClaudeAPI(uploadedImageUrls, promptText);
+    const generatedResponse = claudeResponse.content[0].text;
 
     // Save the generated response to Firestore
     await addDoc(collection(firestore, 'responses'), {
@@ -156,7 +188,7 @@ router.post('/', async (req, res) => {
     res.status(200).json({ id: projectRef.id, response: generatedResponse });
   } catch (error) {
     console.error('Error processing data:', error);
-    res.status(500).json({ error: 'Failed to process data' });
+    res.status(500).json({ error: error.message || 'Failed to process data' });
   }
 });
 

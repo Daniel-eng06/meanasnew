@@ -30,14 +30,18 @@ function SideBar() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const userDocRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userDocRef);
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          setUser(user);
-          setPlan(userData.plan);
-          checkAccess(userData.plan, userData.signupDate.toDate());
-        } else {
-          console.error("No such document!");
+        try {
+          const docSnap = await getDoc(userDocRef);
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            setUser(user);
+            setPlan(userData.plan);
+            checkAccess(userData.plan, userData.signupDate.toDate());
+          } else {
+            console.error("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching user data: ", error);
         }
       } else {
         setUser(null);
@@ -94,11 +98,11 @@ function SideBar() {
     <div className='fullbar'>
       <div className="flatbar">
         <div id="right">
-          <div className="allicon"><img id="das" src={dashimg.not} alt="#" /></div>
+          <div className="allicon"><img id="das" src={dashimg.not} alt="Notification Icon" /></div>
         </div>
         <div id="besides">
           <div className="allicons">
-            <img id="dass" src={dashimg.user} alt="#" onClick={handleUserDropdownClick} />
+            <img id="dass" src={dashimg.user} alt="User Icon" onClick={handleUserDropdownClick} />
             {isUserDropdownVisible && (
               <div className="dropdown-menus">
                 <Link to="/Profile" className="dropdown-items">View Profile</Link>
@@ -110,18 +114,18 @@ function SideBar() {
       </div>
       <div className="sidebar">
         <Link className="compilogo" to="/">
-          <img src="NobgLogo.png" />
+          <img src="NobgLogo.png" alt="Company Logo" />
         </Link>
         <ul className="dashy">
-          <Link className="dashli" to="/Dashboard"><div className="dash"><img id="das" src={dashimg.over} /></div>Overview</Link>
-          <Link className="dashli" to="/Projects/:id"><div className="dash"><img id="das" src={dashimg.proj} /></div>Projects</Link>
-          <Link className="dashli" to="/TeamConnect"><div className="dash"><img id="das" src={dashimg.team} /></div>Team Connect</Link>
-          <Link className="dashli" to="/Assistant"><div className="dash"><img id="das" src={dashimg.assis} /></div>AI Assistant</Link>
+          <Link className="dashli" to="/Dashboard"><div className="dash"><img id="das" src={dashimg.over} alt="Overview" /></div>Overview</Link>
+          <Link className="dashli" to="/Projects"><div className="dash"><img id="das" src={dashimg.proj} alt="Projects" /></div>Projects</Link>
+          <Link className="dashli" to="/TeamConnect"><div className="dash"><img id="das" src={dashimg.team} alt="Team Connect" /></div>Team Connect</Link>
+          <Link className="dashli" to="/Assistant"><div className="dash"><img id="das" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link>
         </ul>
         <Link id="upgra" to='/Pricing'>
           <div>
             <div className="allicon">
-              <img id="das" src={dashimg.upgrad} alt="#" />
+              <img id="das" src={dashimg.upgrad} alt="Upgrade Icon" />
             </div>
             <h3>Upgrade to Unlimited Plan</h3>
           </div>
@@ -139,7 +143,7 @@ function SideBar() {
           {isMenuVisible && (
             <ul className='dropdown-lists'>
               <li><Link className="dashlis" to="/Dashboard"><div className="dashs"><img id="dass" src={dashimg.over} alt="Overview" /></div>Overview</Link></li>
-              <li><Link className="dashlis" to="/Projects/:id"><div className="dashs"><img id="dass" src={dashimg.proj} alt="Projects" /></div>Projects</Link></li>
+              <li><Link className="dashlis" to="/Projects"><div className="dashs"><img id="dass" src={dashimg.proj} alt="Projects" /></div>Projects</Link></li>
               <li><Link className="dashlis" to="/TeamConnect"><div className="dashs"><img id="dass" src={dashimg.team} alt="Team Connect" /></div>Team Connect</Link></li>
               <li><Link className="dashlis" to="/Assistant"><div className="dashs"><img id="dass" src={dashimg.assis} alt="AI Assistant" /></div>AI Assistant</Link></li>
               <li>
@@ -157,15 +161,15 @@ function SideBar() {
           )}
         </ul>
         <Link className="compilogop" to="/">
-          <img src="NobgLogo.png" />
+          <img src="NobgLogo.png" alt="Company Logo" />
         </Link>
         <div className="flatbarp">
           <div id="rightp">
-            <div className="alliconp"><img id="dass" src={dashimg.not} alt="#" /></div>
+            <div className="alliconp"><img id="dass" src={dashimg.not} alt="Notification Icon" /></div>
           </div>
           <div id="besides">
             <div className="allicons">
-              <img id="dass" src={dashimg.user} alt="#" onClick={handleUserDropdownClick} />
+              <img id="dass" src={dashimg.user} alt="User Icon" onClick={handleUserDropdownClick} />
               {isUserDropdownVisible && (
                 <div className="dropdown-menus">
                   <Link to="/Profile" className="dropdown-items">View Profile</Link>
@@ -184,19 +188,19 @@ function SideBar() {
       <div className="select">
         <div id="box">
           <Link id="opt" to="/Preprocess">
-            <div className="allbox"><img id="das" src={dashimg.pre} /></div>
+            <div className="allbox"><img id="das" src={dashimg.pre} alt="Pre-Processing" /></div>
             <p>Clarity & Accuracy For Pre-Processing</p>
           </Link>
         </div>
         <div id="box">
           <Link id="opt" to="/Errorchecker">
-            <div className="allbox"><img id="das" src={dashimg.error} /></div>
+            <div className="allbox"><img id="das" src={dashimg.error} alt="Error Checker" /></div>
             <p>FEA/CFD Analysis Error Solutions</p>
           </Link>
         </div>
         <div id="box">
           <Link id="opt" to="/Postprocess">
-            <div className="allbox"><img id="das" src={dashimg.post} /></div>
+            <div className="allbox"><img id="das" src={dashimg.post} alt="Post-Processing" /></div>
             <p>Clarity & Accuracy For Post-Processing</p>
           </Link>
         </div>

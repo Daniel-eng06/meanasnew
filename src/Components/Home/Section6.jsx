@@ -16,6 +16,16 @@ function FeedbackForm() {
         email: email,
         feedback: feedback,
       });
+
+      // Send feedback via email
+      await fetch("http://localhost:5000/send-feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, feedback }),
+      });
+
       setMessage("Feedback submitted successfully!");
       setEmail("");
       setFeedback("");
@@ -23,14 +33,17 @@ function FeedbackForm() {
       setMessage("Error submitting feedback: " + error.message);
     }
   };
+
   const arrow = {
-        arr:"arrow.png"
-  }
+    arr: "arrow.png",
+  };
+
   return (
     <div className="feedback-form-container">
       <h1 className="comment">
-        More Feedback, More Better <span>MeanAs</span> <br/> For Your Specific FEA/CFD Projects
+        More Feedback, More Better <span>MeanAs</span> <br /> For Your Specific FEA/CFD Projects
       </h1>
+      {message && <p>{message}</p>}
       <form onSubmit={handleSubmit} className="feedback-form">
         <div className="feedback-left">
           <textarea
@@ -42,7 +55,7 @@ function FeedbackForm() {
           />
         </div>
         <div className="left">
-            <div><img src={arrow.arr} alt=""/></div>
+          <div><img src={arrow.arr} alt=""/></div>
         </div>
         <div className="feedback-right">
           <input
@@ -56,7 +69,6 @@ function FeedbackForm() {
           <button type="submit">Submit Your Feedback</button>
         </div>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }

@@ -13,7 +13,8 @@ function Footer() {
           <Link to="/Pricing">Pricing</Link>
           <Link to="/HelpCenter">MeanAs Help Center</Link>
         </nav>
-        <p>&copy; 2024 MeanAs.com. All rights reserved.</p>
+        <p></p>
+        <p>&copy; 2024 meanasai.com. All rights reserved.</p>
       </div>
     </footer>
   );

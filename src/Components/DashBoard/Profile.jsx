@@ -103,7 +103,7 @@ const Profile = () => {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your Name"
                 />
-                <button type="submit">Update Profile</button>
+                <button type="submit" id='proflog'>Update Profile</button>
             </form>
             <form onSubmit={handlePasswordChange} className="password-form">
                 <label>Current Password:</label>
@@ -122,9 +122,9 @@ const Profile = () => {
                 placeholder="New Password"
                 required
                 />
-                <button type="submit">Change Password</button>
+                <button type="submit" id='proflog'>Change Password</button>
             </form>
-            <button onClick={handleLogout} id="relog">Logout</button>
+            <button onClick={handleLogout} id='proflog'>Logout</button>
             </div>
         )}
         </div>

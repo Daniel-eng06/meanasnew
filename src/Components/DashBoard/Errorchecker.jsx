@@ -20,6 +20,7 @@ function Errorchecker() {
   const [option, setOption] = useState('');
   const [customOption, setCustomOption] = useState('');
   const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -32,6 +33,7 @@ function Errorchecker() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (images.length > 0 && goal && option) {
         try {
@@ -60,7 +62,8 @@ function Errorchecker() {
             setResponse(generatedResponse);
 
         } catch (error) {
-            console.error("Error uploading file or sending data", error);
+          console.error("Error uploading file or sending data", error);
+          alert("An error occurred. Please try again.");
         }
     } else {
         alert('Please upload images, enter your goal, and select the analysis software.');
@@ -175,8 +178,8 @@ function Errorchecker() {
             )}
           </div>
 
-          <button type="submit" id='newbut'>
-            Generate Clarity
+          <button type="submit" disabled={loading} id='newbut'>
+            {loading ? 'Generating...' : 'Generate Clarity'}
           </button>
         </form>
       </div>

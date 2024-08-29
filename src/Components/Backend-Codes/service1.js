@@ -26,7 +26,7 @@ async function askAndRespond(msg) {
         isAwaitingResponse = true; // Set flag to true as we start receiving the stream
         try {
             const response = await openai.createChatCompletion({
-                model: 'gpt-4-turbo',
+                model: "gpt-4o-mini",
                 messages: [{ role: 'user', content: msg }],
                 stream: true,
                 max_tokens: 500,

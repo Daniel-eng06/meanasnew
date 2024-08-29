@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import "./Post-process.css"
+import "./Post-process.css";
 import Footer from "../Home/Footer";
 import Grid from "../../Grid";
 import Defaultbars from "./Defaultbars";
-import { storage} from '../../firebase';
+import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FaUpload, FaTrashAlt } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
 
-function Postprocess(){
-    const vid ={
-        vid1:"Gradient 2.mp4",
-        post:"post-process.png",
-    }
+function Postprocess() {
+    const vid = {
+        vid1: "Gradient 2.mp4",
+        post: "post-process.png",
+    };
 
     const [images, setImages] = useState([]);
     const [goal, setGoal] = useState('');
     const [response, setResponse] = useState('');
     const [analysisType, setAnalysisType] = useState('');
     const [detailLevel, setDetailLevel] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -41,7 +42,8 @@ function Postprocess(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        setLoading(true);
+
         if (images.length > 0 && goal && analysisType && detailLevel.length > 0) {
             try {
                 // Upload images to Firebase Storage
@@ -50,7 +52,7 @@ function Postprocess(){
                     await uploadBytes(storageRef, image);
                     return getDownloadURL(storageRef);
                 }));
-    
+
                 // Send data to backend
                 const response = await axios.post('/postprocess', {
                     goal,
@@ -58,25 +60,27 @@ function Postprocess(){
                     analysisType,
                     detailLevel,
                 });
-    
+
                 // Handle backend response
                 const { id, response: generatedResponse } = response.data;
-    
+
                 // Update component state
                 setImages([]);
                 setGoal('');
                 setAnalysisType('');
                 setDetailLevel([]);
                 setResponse(generatedResponse);
-    
+
             } catch (error) {
                 console.error("Error uploading file or sending data", error);
+            } finally {
+                setLoading(false);
             }
         } else {
             alert('Please upload images, enter your goal, select an analysis type, and choose the level of detail.');
+            setLoading(false);
         }
     };
-    
 
     const generatePDF = async () => {
         const doc = new jsPDF();
@@ -108,6 +112,7 @@ function Postprocess(){
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(pdfBlobURL); // Cleanup
 
         alert(`Report generated and uploaded successfully! URL: ${pdfURL}`);
     };
@@ -225,8 +230,8 @@ function Postprocess(){
                             </label>
                         </div>
                     </div>
-                    <button type="submit" id='newbut'>
-                        Generate Clarity
+                    <button type="submit" disabled={loading} id='newbut'>
+                        {loading ? 'Generating...' : 'Generate Clarity'}
                     </button>
                 </form>
             </div>

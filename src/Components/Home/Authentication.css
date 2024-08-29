@@ -7,118 +7,135 @@
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
     border: 2px solid silver;
     width: 320px;
-    height: 450px;
-    margin-top: 80px;
+    height: auto;
+    margin-top: 30px;
     border-radius: 20px;
-    
   }
-  
-  .meanaslogo{
-    width: 230px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    }
+ 
+.meanaslogo {
+  width: 230px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 
-    .meanaslogo img{
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: cover;
-    }
+.meanaslogo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
 
-  #or {
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: #000925;
-    font-weight: 550;
+#or {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #000925;
+  font-weight: 550;
+  margin-top: -15px;
+  display: flex;
+  align-items: center;
+}
+
+.labs {
+  font-size: 18px;
+  color: #000925;
+  font-weight: 550;
+  display: flex;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 15px; /* Added margin to separate the form and buttons */
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  width: 260px;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #ff8800;
+  outline: none;
+}
+
+#sign ,.google-signin{
+  padding: 10px;
+  margin-bottom: 15px;
+  color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  background-color: #000925;
+  width: 260px; /* Ensure buttons are the same width */
+}
+
+#sign:hover {
+  background-color: #ff8800;
+}
+
+/* New style for Google Sign-In button */
+.google-signin {
+  background-color: #ff8800; /* Google brand color */
+  border: 2px solid #000925;
+}
+
+.google-signin:hover {
+  background-color: silver;
+  color:#000925;
+  font-weight: bold;
+}
+
+#background-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+@media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
+  .auth {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+    margin-top: 100px;
   }
 
-  .labs{
-    font-size: 18px;
-    color: #000925;
-    font-weight: 550;
-    display: flex;
-    margin-left: 10px;
-    margin-bottom: 5px;
+  .meanaslogo {
+    width: 180px;
+    height: 60px;
   }
-  
-  .forms {
-    display: flex;
-    flex-direction: column;
+
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
-    max-width: 400px;
+    font-size: 15px;
   }
-  
-  input[type="email"], input[type="password"] {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-    width: 260px;
-  }
-  
-  input[type="email"]:focus, input[type="password"]:focus {
-    border-color: #ff8800;
-    outline: none;
-  }
-  
+
   button {
-    padding: 10px;
-    margin-bottom: 15px;
-    color: white;
-    border: 2px solid black;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    background-color: #000925;
-  }
-  
-  button:hover {
-    background-color: #ff8800;
-  }
-  
-  #background-video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+    width: 70%;
+    font-size: 16px;
   }
 
-  @media all and (max-width: 375px), all and (max-width: 414px), all and (max-width: 430px) {
-    .auth {
-      width: 90%;
-      height: auto;
-      padding: 15px;
-      margin-top: 100px;
-    }
-  
-    .meanaslogo {
-      width: 180px;
-      height: 60px;
-    }
-  
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      font-size: 15px;
-    }
-  
-    button {
-      width: 70%;
-      font-size: 16px;
-    }
-
-    .labs{
-      margin-left: 0;
-      font-size: 16px;
-    }
+  .labs {
+    margin-left: 0;
+    font-size: 16px;
   }
-  
+}

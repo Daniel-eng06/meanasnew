@@ -11,7 +11,7 @@ axios.defaults.baseURL = 'http://localhost:5000'; // Ensure this points to your 
 function Assistant() {
     const vidas = {
         vidas: 'Gradient 2.mp4',
-        send:"send.png",
+        send: "send.png",
     };
 
     const [messages, setMessages] = useState([]);
@@ -21,18 +21,28 @@ function Assistant() {
         const q = query(collection(db, 'chats'), orderBy('timestamp'));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setMessages(snapshot.docs.map((doc) => doc.data()));
+        }, (error) => {
+            console.error('Error fetching messages:', error);
+            alert('Failed to fetch messages. Please try again later.');
         });
+
         return () => unsubscribe();
     }, []);
 
     const sendMessage = async (e) => {
         e.preventDefault();
+        if (!input.trim()) {
+            alert('Please enter a message before sending.');
+            return;
+        }
+
         try {
             const response = await axios.post('/service1/send-message', { message: input });
             console.log('Response from server:', response.data);
             setInput('');
         } catch (error) {
             console.error('Error sending message:', error);
+            alert('Failed to send message. Please try again.');
         }
     };
 
@@ -47,13 +57,17 @@ function Assistant() {
                             <p>User: {message.message}</p>
                             <p>Response: {message.response}</p>
                         </div>
-                    ))}   
+                    ))}
                 </div>
                 <form onSubmit={sendMessage} className='chatai'>
-                    <input value={input} onChange={(e) => setInput(e.target.value)} id='intext'
-                    placeholder='Ask MeanAs any questions related to FEA/CFD Analysis tailored to your specific project...' 
-                    required/>
-                    <button type="submit" id='sendit'><img src={vidas.send} alt='send message'/></button>
+                    <input 
+                        value={input} 
+                        onChange={(e) => setInput(e.target.value)} 
+                        id='intext'
+                        placeholder='Ask MeanAs any questions related to FEA/CFD Analysis tailored to your specific project...' 
+                        required
+                    />
+                    <button type="submit" id='sendit'><img src={vidas.send} alt='send message' /></button>
                 </form>
             </div>
             <Footer />

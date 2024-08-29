@@ -5,13 +5,16 @@ import MeanAsApp from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <MeanAsApp />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+try {
+  root.render(
+    <React.StrictMode>
+      <MeanAsApp />
+    </React.StrictMode>
+  );
+} catch (error) {
+  console.error('Error rendering the React app:', error);
+}
+
+// Optional: Measure performance
+reportWebVitals(console.log);
