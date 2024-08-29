@@ -92,7 +92,7 @@ router.post('/', upload.array('images'), async (req, res) => {
     if (analysisType === 'FEA') {
       promptText = `
         Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
-        Task: With this as my ${description}:
+        Task: With this as my ${description} Bolden the key factors:
 
         1. Model Analysis and Geometry Cleanup:
           - Analyze the model in the provided images, focusing on geometry cleanup.
@@ -130,7 +130,7 @@ router.post('/', upload.array('images'), async (req, res) => {
     } else if (analysisType === 'CFD') {
       promptText = `
         Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
-        Task: With this as my ${description}:
+        Task: With this as my ${description}  Bolden the key factors:
     
         1. Model Analysis and Geometry Cleanup:
           - Analyze the model in the provided images, focusing on geometry cleanup for fluid dynamics.
@@ -161,7 +161,7 @@ router.post('/', upload.array('images'), async (req, res) => {
     } else {
       promptText = `
       The provided analysis type (${analysisType}) is not recognized or is invalid. Please specify a valid analysis type (e.g., 'FEA' for Finite Element Analysis or 'CFD' for Computational Fluid Dynamics) to proceed.
-  
+      Bolden the key factors
       Ensure the following details are included:
       - **Analysis Type**: Choose between 'FEA' or 'CFD'.
       - **Description**: Provide a brief description of the analysis.

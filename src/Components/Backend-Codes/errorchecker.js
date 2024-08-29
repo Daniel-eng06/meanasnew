@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
     }));
 
     // Create the prompt text based on the goal and analysis type
-    const promptText = `Describe how to solve the error in the analysis with the software ${analysisType} for the goal: ${goal}. Detail level: ${detailLevel}.`;
+    const promptText = `Describe how to solve the error in the analysis with the software ${analysisType} for the goal: ${goal}. Detail level: ${detailLevel}.  Bolden the key factors and be clear and concised`;
 
     // Call OpenAI Vision Pro to process images and the prompt
     const openAIResponse = await callOpenAIVisionPro(uploadedImageUrls, promptText);

@@ -76,7 +76,7 @@ router.post('/', async (req, res) => {
       promptText = `
       Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in Finite Element Analysis (FEA), your task involves post-processing the FEA results of the provided model.
       
-      Task: With this as my ${goal}:
+      Task: With this as my ${goal}  Bolden the key factors:
       
       1. FEA Results Interpretation:
          - Analyze the stress and strain distributions obtained from the FEA analysis in the provided visualized images.
@@ -106,7 +106,7 @@ router.post('/', async (req, res) => {
       promptText = `
       Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in Computational Fluid Dynamics (CFD), your task involves post-processing the CFD results of the provided model.
 
-      Task: With this as my ${goal}:
+      Task: With this as my ${goal}  Bolden the key factors:
 
       1. CFD Results Interpretation:
         - Analyze the fluid flow patterns and other relevant results obtained from the CFD analysis in the provided visualized images.
@@ -134,7 +134,7 @@ router.post('/', async (req, res) => {
       `;
     } else {
       promptText = `
-      Please specify a valid analysis type (e.g., FEA or CFD) and provide the necessary details for the analysis.
+      Please specify a valid analysis type (e.g., FEA or CFD) and provide the necessary details for the analysis.  Bolden the key factors
       - **Analysis Type**: Choose between FEA or CFD.
       - **Description**: Provide a brief description of the analysis.
       - **Materials**: Specify the materials used in the analysis.
