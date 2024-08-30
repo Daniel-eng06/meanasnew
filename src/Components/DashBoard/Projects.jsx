@@ -1,63 +1,91 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import './Projects.css';
+import { db, auth } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
-import Footer from "../Home/Footer";
-import Defaultbars from './Defaultbars';
-import './Projects.css'; 
+import { useParams } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 
 function Projects() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchProject = async () => {
-      const docRef = doc(db, 'projects', id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setProject(docSnap.data());
+    // Check if user is authenticated
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
       } else {
-        console.log('No such document!');
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchProject = async () => {
+      setLoading(true);
+
+      try {
+        const docRef = doc(db, 'projects', id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setProject(docSnap.data());
+        } else {
+          console.log('No such project document!');
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProject();
-  }, [id]);
+  }, [id, user]);
 
-  if (!project) {
-    return <div id='load'>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  const vido ={
-    vid1:"Gradient 2.mp4"
-  };
+  if (!project) {
+    return <div>No project found or you are not authorized to view this project.</div>;
+  }
 
   return (
-        <div className='proj'>
-            <video id="background-video"
-                   src={vido.vid1} controls loop autoPlay muted>
-            </video>
-            <Defaultbars />
-            <div className="project-page">
-                <h2>Project Details</h2>
-                <p>Description: {project.description}</p>
-                <p>Analysis Type: {project.analysisType}</p>
-                <p>Materials: {project.materials.join(', ')}</p>
-                <p>Option: {project.option}</p>
-                <div className="image-gallery">
-                    {project.imageUrls.map((url, index) => (
-                    <img key={index} src={url} alt={`Project Image ${index + 1}`} />
-                    ))}
-                </div>
-                <div className="responses">
-                    <h3>Generated Responses</h3>
-                    {project.responses.map((response, index) => (
-                    <p key={index}>{response}</p>
-                    ))}
-                </div>
-            </div>
-            <Footer/>
-        </div>
+    <div className="project-details">
+      <h1>Project Details</h1>
+      <h2>Description:</h2>
+      <p>{project.description}</p>
+      
+      <h2>Materials:</h2>
+      <ul>
+        {project.materials.map((material, index) => (
+          <li key={index}>{material}</li>
+        ))}
+      </ul>
+      
+      <h2>Analysis Type:</h2>
+      <p>{project.analysisType}</p>
+      
+      <h2>Preferred Software:</h2>
+      <p>{project.option} {project.customOption}</p>
+      
+      <h2>Images:</h2>
+      <div className="image-gallery">
+        {project.imageUrls.map((url, index) => (
+          <img key={index} src={url} alt={`Project Image ${index + 1}`} />
+        ))}
+      </div>
+      
+      <h2>Generated Response:</h2>
+      <p>{project.response}</p>
+    </div>
   );
 }
 

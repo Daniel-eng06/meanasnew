@@ -66,7 +66,7 @@ function Preprocess() {
     if (images.length > 0) {
       try {
         // Upload images to Firebase Storage
-        const imageUrls = await Promise.all(images.map(async (image) => {
+          const imageUrls = await Promise.all(images.map(async (image) => {
           const storageRef = ref(storage, `images/${image.name}`);
           await uploadBytes(storageRef, image);
           return getDownloadURL(storageRef);
