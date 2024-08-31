@@ -100,10 +100,11 @@ router.post('/', upload.array('images'), async (req, res) => {
           - Provide solutions to perfect the model for further analysis.
 
         2. Analysis Type Recommendation:
-          - Based on my role description, recommend the specific analysis type I should perform that aligns with my goal.
+          - Based on my role description, recommend the specific analysis type I should perform that aligns with my goal based on physical behaviours.
 
         3. Material Selection:
-          - Suggest 3-5 materials from ${materials} that best suit my goal and select the materials from MatWeb, including full numerical properties for use specifically in my analysis. Example:
+          - Suggest 3-5 materials from ${materials} that best suit my goal and select the materials from MatWeb, including full numerical properties for use specifically in my analysis.
+           <example>:
             - Stainless Steel
               - Density: 7.85 g/cm³
               - Tensile Strength: 515-720 MPa
@@ -111,22 +112,85 @@ router.post('/', upload.array('images'), async (req, res) => {
               - Thermal Conductivity: 16.2 W/mK
               - Electrical Conductivity: 1.45x10⁶ S/m
               - Melting Point: 1400-1450°C
-
+            </example>
         4. Mesh Quality and Critical Locations:
           - Identify critical locations on the model in the provided image that require high-quality meshing.
-          - Provide mesh quality criteria for these areas. Example:
+          - Provide mesh quality criteria for these areas. 
+          <examples>:
             - "At the top corner of the model where there is a hole, increase the mesh quality by using an element size of 0.1 at the edges."
+          </examples>
 
         5. Boundary Conditions and Numerical Parameters:
-          - Examine the model and suggest boundary conditions and numerical parameters for applied loads on specific areas in the provided images. Example:
+          - Examine the model and suggest boundary conditions and numerical parameters for applied loads on specific areas in the provided images. 
+          <example>:
             - "Consider applying a fixed support at the bolted areas on the left and right sides of the model."
             - "Consider applying a downward-facing load of 10N on the top layer of the model."
+          <example>
           - If possible, provide relevant calculations for the boundary conditions needed for the analysis, including loads, constraints, and supports.
 
         6. Roadmap and Analysis Recommendations:
           - Using all the provided data, create a clear and concise roadmap for conducting the analysis in ${option} ${customOption}.
+          <example>
+              →Workbench
+              Open ANSYS Workbench
+
+              →Analysis_Systems
+              Drag "Static Structural" from Analysis Systems to Project Schematic
+
+              →Geometry
+              Double-click "Geometry" cell
+              Click "File" > "Import External Geometry File"
+              Select phone holder CAD file
+              Click "Generate" to create geometry
+
+              →Engineering_Data
+              Double-click "Engineering Data" cell
+              Click "Engineering Data Sources"
+              Expand "General Materials" > Select "Polycarbonate"
+              Click "Add to Engineering Data"
+              Close Engineering Data window
+
+              →Model
+              Double-click "Model" cell to open Design Modeler
+              Click "Generate" to create model
+              Right-click model > "Named Selection" > Create selections for plug area and support points
+
+              →Setup
+              Double-click "Setup" cell to open Mechanical
+              Expand "Mesh" in outline
+              Right-click "Mesh" > Insert "Method"
+              Select body > Choose "Hex Dominant"
+              Right-click "Mesh" > Insert "Sizing"
+              Set element size to 2 mm
+              Apply load around the circular section where is located below the the flat surface athe right corner
+              Click "Generate Mesh"
+
+              →Static_Structural
+              Expand "Static Structural" in outline
+              Right-click > Insert > "Fixed Support"
+              Select base of holder
+              Right-click > Insert > "Force"
+              Select plug area > Set to 50 N downward
+
+              →Solution
+              Right-click "Solution" > Insert > "Total Deformation"
+              Right-click "Solution" > Insert > "Equivalent Stress"
+
+              →Solve
+              Click "Solve" button in toolbar
+
+              →Results
+              Double-click each result item to view
+
+              →Tools
+              Click "Tools" > "Report Preview" to generate report
+
+              →Save
+              Click "File" > "Save As" > Name project "Phone_Holder_FEA.ansys"
+          </example>
           - Include detailed recommendations for the analysis process, focusing on achieving the best possible results for the specific model in the provided image.
         `;
+        //complete the prompt for the cfd as well
     } else if (analysisType === 'CFD') {
       promptText = `
         Role: As a CAE expert, Senior Engineer in all engineering fields, and physicist with extensive knowledge in all kinds of analysis under FEA/CFD.
