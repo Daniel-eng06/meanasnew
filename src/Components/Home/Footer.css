@@ -8,7 +8,7 @@
   height: 100px;
   background: rgba(255, 255, 255, 0.1); /* semi-transparent background */
   backdrop-filter: blur(10px); /* bur effect */
-  -webkit-backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /*Blur*/
 }
 
 .footer-content {
